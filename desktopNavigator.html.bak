@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>Toy Story Adventure — The Whole House Is Your World</title>
+<title>Toy House Adventure</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -123,27 +123,6 @@ canvas{display:block}
 #game-complete button:hover{background:var(--accent);color:var(--bg)}
 @media(hover:none){#hint-hud{display:none!important}#mobile-controls{display:block!important}}
 @media(hover:hover){#mobile-controls{display:none!important}}
-
-/* ===== TOY STORY ADVENTURE ENHANCEMENTS ===== */
-#daynight-indicator{position:fixed;top:1rem;left:50%;transform:translateX(-50%);z-index:55;font-size:.6rem;color:var(--muted);display:flex;align-items:center;gap:6px;pointer-events:none;background:var(--card);padding:.2rem .7rem;border-radius:20px;border:1px solid var(--border);transition:all 2s}
-#region-label{position:fixed;top:3rem;left:50%;transform:translateX(-50%);z-index:55;font-size:.8rem;font-weight:600;pointer-events:none;text-align:center;transition:all .6s;text-shadow:0 2px 8px rgba(0,0,0,.6);opacity:.7;letter-spacing:.08em}
-#speech-bubble{position:fixed;bottom:28%;left:50%;transform:translateX(-50%);z-index:60;background:var(--card);border:2px solid var(--accent);border-radius:16px;padding:.6rem 1.2rem;font-size:.82rem;max-width:360px;width:90%;opacity:0;transition:opacity .4s;backdrop-filter:blur(8px);pointer-events:none;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.4)}
-#speech-bubble.visible{opacity:1}
-#speech-bubble .sb-speaker{color:var(--accent);font-weight:600;font-size:.72rem;display:block;margin-bottom:2px}
-#speech-bubble .sb-text{color:var(--fg);line-height:1.4}
-#warning-indicator{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:60;font-size:2.8rem;opacity:0;pointer-events:none;transition:opacity .3s}
-#warning-indicator.show{opacity:.8}
-.vacuum-alert{color:var(--accent3);text-shadow:0 0 20px rgba(224,96,64,.5);animation:vacPulse .5s ease-in-out infinite alternate}
-@keyframes vacPulse{from{transform:translate(-50%,-50%) scale(1)}to{transform:translate(-50%,-50%) scale(1.15)}}
-.clockhz{position:fixed;top:3.6rem;right:1rem;z-index:55;font-family:'JetBrains Mono',monospace;font-size:.55rem;color:var(--muted);pointer-events:none;opacity:.5}
-.clockhz .cd-time{font-size:.7rem;color:var(--accent2)}
-#secret-counter{position:fixed;bottom:1rem;left:1rem;z-index:55;font-size:.55rem;color:var(--muted);pointer-events:none;opacity:.4;font-family:'JetBrains Mono',monospace}
-#toy-threat{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:55;font-size:.65rem;padding:.25rem .8rem;border-radius:12px;pointer-events:none;opacity:0;transition:opacity .5s;background:rgba(224,96,64,.15);border:1px solid rgba(224,96,64,.3);color:var(--accent3)}
-#toy-threat.show{opacity:1}
-.hud-health-bar{position:fixed;top:.8rem;left:50%;transform:translateX(-50%);z-index:55;width:120px;height:4px;background:var(--border);border-radius:2px;pointer-events:none}
-.hud-health-fill{height:100%;width:100%;background:var(--accent2);border-radius:2px;transition:width .3s}
-@media(hover:none){#region-label{top:3.6rem}#daynight-indicator{top:.6rem;font-size:.5rem}}
-
 </style>
 </head>
 <body>
@@ -171,7 +150,7 @@ canvas{display:block}
 
 <div id="hud">
   <div>
-    <div class="hud-title">🧸 Toy Story Adventure</div>
+    <div class="hud-title">🏠 Toy House Adventure</div>
     <div id="quest-list" style="margin-top:6px;pointer-events:none">
       <div class="quest-item" id="quest-main"><span class="q-check">🔑</span><span class="q-name">Escape the House</span><div class="q-desc">Find 3 keys to unlock the front door</div></div>
       <div class="quest-item" id="quest-toy"><span class="q-check">🎯</span><span class="q-name">Find Buzz</span><div class="q-desc">Search the toy box for the action figure</div></div>
@@ -179,9 +158,6 @@ canvas{display:block}
       <div class="quest-item" id="quest-faucet"><span class="q-check">💧</span><span class="q-name">Fix the Drip</span><div class="q-desc">Turn off the bathroom faucet</div></div>
       <div class="quest-item" id="quest-cabinet"><span class="q-check">🔐</span><span class="q-name">Open Cabinet</span><div class="q-desc">Crack the code (hint: look at the books!)</div></div>
       <div class="quest-item" id="quest-attic"><span class="q-check">🏰</span><span class="q-name">Reach the Attic</span><div class="q-desc">Find a way up!</div></div>
-      <div class="quest-item" id="quest-toys"><span class="q-check">🧸</span><span class="q-name">Toy Friends</span><div class="q-desc">Meet all the toy characters</div></div>
-      <div class="quest-item" id="quest-clock"><span class="q-check">🕰️</span><span class="q-name">Wind the Clock</span><div class="q-desc">Find the winding key in the attic</div></div>
-
     </div>
   </div>
   <div class="hud-right">
@@ -272,13 +248,7 @@ canvas{display:block}
         <div class="wq"><span class="wq-icon">🎯</span><span>Find <strong>Buzz Lightyear</strong> in the toy box (Living Room)</span></div>
         <div class="wq"><span class="wq-icon">🌱</span><span><strong>Water the plant</strong> — find the watering can (Hallway)</span></div>
         <div class="wq"><span class="wq-icon">💧</span><span><strong>Fix the drip</strong> — turn off the bathroom faucet</span></div>
-        <div class="wq"><span class="wq-icon">🧸</span><span>Meet the <strong>Toy Characters</strong> — each has a story!</span></div>
-        <div class="wq"><span class="wq-icon">🕰️</span><span><strong>Wind the Grandfather Clock</strong> in the hallway!</span></div>
         <div class="wq"><span class="wq-icon">🔐</span><span><strong>Open the cabinet</strong> — crack the code (hint: colored books!)</span></div>
-        <div class="wq"><span class="wq-icon">🧸</span><span>Meet the <strong>Toy Characters</strong> — each has a story!</span></div>
-        <div class="wq"><span class="wq-icon">🕰️</span><span><strong>Wind the Grandfather Clock</strong> in the hallway</span></div>
-        <div class="wq"><span class="wq-icon">🧹</span><span><strong>Watch out!</strong> Vacuum cleaner patrols the hall</span></div>
-        <div class="wq"><span class="wq-icon">🐱</span><span><strong>The Cat</strong> is sleeping in the living room... shh!</span></div>
         <div class="wq"><span class="wq-icon">🏰</span><span><strong>Reach the attic</strong> — climb the ladder in the bedroom!</span></div>
       </div>
     </div>
@@ -301,10 +271,6 @@ canvas{display:block}
         <div class="wt">• Push furniture to find hidden items!</div>
         <div class="wt">• The <strong>blue book</strong> on the bookshelf hints at the cabinet code</div>
         <div class="wt">• Check under the bed, in the cookie jar, and behind the mirror</div>
-        <div class="wt">• Toys around the house have stories — talk to them (click)!</div>
-        <div class="wt">• The vacuum and cat are dangerous — hide or run!</div>
-        <div class="wt">• The grandfather clock in the hallway needs winding</div>
-        <div class="wt">• Visit the playroom at night for a surprise!</div>
         <div class="wt">• Use the mini-map (bottom-right) to navigate rooms</div>
       </div>
     </div>
@@ -343,11 +309,11 @@ const GS = {
   move: { f: 0, r: 0 },
   orbit: { theta: Math.PI * 1.25, phi: Math.PI / 5, dist: 5 },
   orbiting: false, wantJump: false, wantClick: false,
-  health: 100, collected: new Set(),
+  collected: new Set(),
   quests: {
     main: { done: false, progress: 0, total: 3 },
     toy: { done: false }, plant: { done: false }, faucet: { done: false },
-    cabinet: { done: false }, attic: { done: false }, toys: { done: false, progress: 0, total: 4 }, clock: { done: false }
+    cabinet: { done: false }, attic: { done: false }
   },
   interactables: [],
   puzzle: { active: false, digits: [0, 0, 0], idx: 0 },
@@ -423,7 +389,7 @@ function updateQuestUI() {
   const m = document.getElementById('quest-main');
   m.querySelector('.q-desc').textContent = q.main.done ? '✓ Door unlocked!' : `Keys: ${q.main.progress}/${q.main.total}`;
   if (q.main.done) m.classList.add('done');
-  for (const [id, done] of [['toy',q.toy],['plant',q.plant],['faucet',q.faucet],['cabinet',q.cabinet],['attic',q.attic],['toys',q.toys],['clock',q.clock]]) {
+  for (const [id, done] of [['toy',q.toy],['plant',q.plant],['faucet',q.faucet],['cabinet',q.cabinet],['attic',q.attic]]) {
     const el = document.getElementById('quest-'+id);
     if (done.done) el.classList.add('done');
   }
@@ -432,13 +398,6 @@ function updateQuestUI() {
     if (i <= GS.keysFound) el.classList.add('found');
   }
   const obj = document.getElementById('obj-display');
-    // Health bar
-  const hfill = document.getElementById('health-display');
-  if (hfill) {
-    const hp = GS.health || 100;
-    hfill.style.width = Math.max(0, Math.min(100, hp)) + '%';
-    hfill.style.background = hp > 60 ? 'var(--accent2)' : hp > 30 ? 'var(--accent)' : 'var(--accent3)';
-  }
   obj.textContent = q.main.done ? '🎉 Escape through the front door!' : `Keys: ${GS.keysFound}/3 · Score: ${GS.score}`;
 }
 
@@ -794,12 +753,12 @@ function buildHouse(scene,phys){
   makeWall(wt,rH,mD-4,wallMat,0,rH/2,0);addSB(wt,rH,mD-4,0,rH/2,0);
   // Room divider walls (prevent walking between rooms through walls)
   // Extra wall between Living Room and Bedroom (reinforces z=0 wall along x=-20 to 0)
-  const lrDivL=new THREE.Mesh(new THREE.BoxGeometry(8,HH*0.6,wt),wallMat);lrDivL.position.set(-16,HH*0.3,-.15);lrDivL.castShadow=true;scene.add(lrDivL);allBuildingMeshes.push(lrDivL);addSB(8,HH*0.6,wt,-16,HH*0.3,-.15);const lrDivR=new THREE.Mesh(new THREE.BoxGeometry(8,HH*0.6,wt),wallMat);lrDivR.position.set(-2,HH*0.3,-.15);lrDivR.castShadow=true;scene.add(lrDivR);allBuildingMeshes.push(lrDivR);addSB(8,HH*0.6,wt,-2,HH*0.3,-.15);
+  const lrDiv=new THREE.Mesh(new THREE.BoxGeometry(20,HH,wt),wallMat);lrDiv.position.set(-10,HH/2,-.15);lrDiv.castShadow=true;scene.add(lrDiv);allBuildingMeshes.push(lrDiv);addSB(20,HH,wt,-10,HH/2,-.15);
   // Extra wall between Kitchen and Bathroom (reinforces z=0 wall along x=0 to 10)
-  const kbDivL=new THREE.Mesh(new THREE.BoxGeometry(4,HH*0.6,wt),wallMat);kbDivL.position.set(2,HH*0.3,-.15);kbDivL.castShadow=true;scene.add(kbDivL);allBuildingMeshes.push(kbDivL);addSB(4,HH*0.6,wt,2,HH*0.3,-.15);const kbDivR=new THREE.Mesh(new THREE.BoxGeometry(4,HH*0.6,wt),wallMat);kbDivR.position.set(8,HH*0.3,-.15);kbDivR.castShadow=true;scene.add(kbDivR);allBuildingMeshes.push(kbDivR);addSB(4,HH*0.6,wt,8,HH*0.3,-.15);
+  const kbDiv=new THREE.Mesh(new THREE.BoxGeometry(10,HH,wt),wallMat);kbDiv.position.set(5,HH/2,-.15);kbDiv.castShadow=true;scene.add(kbDiv);allBuildingMeshes.push(kbDiv);addSB(10,HH,wt,5,HH/2,-.15);
   // Playroom partition (wall between Playroom and Bedroom at x=-20)
-  const prDiv=new THREE.Mesh(new THREE.BoxGeometry(wt,HH*0.4,8),wallMat);prDiv.position.set(-19.85,HH*0.2,-2);prDiv.castShadow=true;scene.add(prDiv);allBuildingMeshes.push(prDiv);addSB(wt,HH*0.4,8,-19.85,HH*0.2,-2);
-  // removed interior wall
+  const prDiv=new THREE.Mesh(new THREE.BoxGeometry(wt,HH,16),wallMat);prDiv.position.set(-19.85,HH/2,-8);prDiv.castShadow=true;scene.add(prDiv);allBuildingMeshes.push(prDiv);addSB(wt,HH,16,-19.85,HH/2,-8);
+  makeWall(mW2,rH,wt,wallMat,-mW2/2,rH/2,0);addSB(mW2,rH,wt,-mW2/2,rH/2,0);
   makeWall(mW2-3,rH,wt,wallMat,(mW2-3)/2+3,rH/2,0);addSB(mW2-3,rH,wt,(mW2-3)/2+3,rH/2,0);
   // Playroom extension
   const pW=8,pD=16;
@@ -820,26 +779,6 @@ function buildHouse(scene,phys){
   const door=new THREE.Mesh(new THREE.BoxGeometry(3.5,6,.15),new THREE.MeshStandardMaterial({color:0x6a3a20,roughness:.7,metalness:.1}));
   door.position.set(0,3,mD2+wt/2+.08);door.name='frontDoor';door.castShadow=true;scene.add(door);allBuildingMeshes.push(door);
   addSB(1.75,3,.1,0,3,mD2+.2);
-  // Interactive front door — click to escape with all 3 keys
-  const doorBody=new Body({pos:new THREE.Vector3(0,3,mD2+wt/2+.08),hs:new THREE.Vector3(1.75,3,.15),static:true,tag:'frontDoor',isInteractable:true,interactType:'activate',
-    interactPrompt:GS.keysFound>=3?'🚪 Open the front door!':'🔒 Need '+GS.keysFound+'/3 keys',
-    data:{points:0}});
-  phys.add(doorBody);
-  registerInteractable(doorBody,'activate','Front door',()=>{
-    if(GS.keysFound>=3&&!GS._escaped){
-      GS._escaped=true;
-      // Animate door opening
-      door.rotation.y=-Math.PI/2;door.position.x=-0.5;
-      sfxDoor();
-      showToast('🎉 The door swings open! You escaped!','success');
-      addScore(100,'Escaped the house! +100');
-      setTimeout(()=>completeGame(),1500);
-      burstSparkles(0,3,mD2+wt/2+.5,20);
-    }else{
-      showToast('🔒 The door is locked. Find all 3 keys first! ('+GS.keysFound+'/3)','');
-      sfx(200,.15,'triangle',.03);
-    }
-  });
   const dh=new THREE.Mesh(new THREE.SphereGeometry(.15,8,8),new THREE.MeshStandardMaterial({color:0xd4a34a,roughness:.3,metalness:.8}));
   dh.position.set(.8,3,mD2+wt/2+.25);scene.add(dh);allBuildingMeshes.push(dh);
   // Lights
@@ -868,12 +807,12 @@ function buildLivingRoom(scene,phys){
   registerInteractable(phys.add(new Body({pos:new THREE.Vector3(-7.5,2.96,6.5),hs:new THREE.Vector3(.4,.015,.25),mass:.2,tag:'magazine',mesh:mag,friction:.7})),'push','Push magazine');
   const rm=new THREE.Mesh(new THREE.BoxGeometry(.4,.08,.15),warmMat(0x2a2a2a,.5,.3));rm.position.set(-8.5,2.97,5.5);scene.add(rm);allBuildingMeshes.push(rm);
   registerInteractable(phys.add(new Body({pos:new THREE.Vector3(-8.5,2.97,5.5),hs:new THREE.Vector3(.2,.04,.075),mass:.15,tag:'remote',mesh:rm})),'push','Push remote');
-  const tvS=new THREE.Mesh(new THREE.BoxGeometry(2.2,.2,1.2),warmMat(0x1a1a1a,.4,.5));tvS.position.set(-12,.1,9);tvS.receiveShadow=true;scene.add(tvS);allBuildingMeshes.push(tvS);addSB(1.1,.1,.6,-12,.1,9);
-  const tvB=new THREE.Mesh(new THREE.BoxGeometry(2,1.6,.1),warmMat(0x1a1a1a,.3,.6));tvB.position.set(-12,1.5,8.94);tvB.castShadow=true;scene.add(tvB);allBuildingMeshes.push(tvB);
+  const tvS=new THREE.Mesh(new THREE.BoxGeometry(3,.2,1.5),warmMat(0x1a1a1a,.4,.5));tvS.position.set(-14,.1,6);tvS.receiveShadow=true;scene.add(tvS);allBuildingMeshes.push(tvS);addSB(1.5,.1,.75,-14,.1,6);
+  const tvB=new THREE.Mesh(new THREE.BoxGeometry(2.4,1.8,.12),warmMat(0x1a1a1a,.3,.6));tvB.position.set(-14,1.5,5.4);tvB.castShadow=true;scene.add(tvB);allBuildingMeshes.push(tvB);
   const tvTex=createTVTexture();
   const scMat=new THREE.MeshStandardMaterial({map:tvTex,emissive:0x1a2a4a,emissiveIntensity:.3,roughness:.2});
-  const sc=new THREE.Mesh(new THREE.PlaneGeometry(1.8,1.4),scMat);sc.position.set(-12,1.5,9.01);scene.add(sc);allBuildingMeshes.push(sc);
-  const tvI=new Body({pos:new THREE.Vector3(-12,1.5,9),hs:new THREE.Vector3(1,.8,.1),static:true,tag:'tv',isInteractable:true,interactType:'activate',interactPrompt:'Turn on TV',data:{points:5}});
+  const sc=new THREE.Mesh(new THREE.PlaneGeometry(2.1,1.5),scMat);sc.position.set(-14,1.5,5.47);scene.add(sc);allBuildingMeshes.push(sc);
+  const tvI=new Body({pos:new THREE.Vector3(-14,1.5,5.4),hs:new THREE.Vector3(1.2,.9,.1),static:true,tag:'tv',isInteractable:true,interactType:'activate',interactPrompt:'Turn on TV',data:{points:5}});
   phys.add(tvI);registerInteractable(tvI,'activate','Turn on TV',()=>{toggleTV();scMat.emissive=tvOn?new THREE.Color(0x4060a0):new THREE.Color(0x1a2a4a);scMat.emissiveIntensity=tvOn?.6:.3;tvI.interactPrompt=tvOn?'Turn off TV':'Turn on TV';});
   const sh=new THREE.Mesh(new THREE.BoxGeometry(2.5,6,1.2),warmMat(0x8a7050,.6));sh.position.set(-17,3,2);sh.castShadow=true;scene.add(sh);allBuildingMeshes.push(sh);addSB(1.25,3,.6,-17,3,2);
   for(let i=0;i<4;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(2.2,.08,1.1),warmMat(0x7a6040));b.position.set(-17,.5+i*1.5,2);scene.add(b);allBuildingMeshes.push(b);}
@@ -1084,488 +1023,6 @@ function drawMinimap(){
   ctx.fillStyle='rgba(255,255,255,.4)';ctx.font='6px sans-serif';ctx.fillText('🔑'+GS.keysFound+'/3',4,h-4);
 }
 
-
-
-/* ================================================================
- *  TOY STORY ADVENTURE ENHANCEMENTS
- *  NPCs | Day/Night | Enemies | Speech | Secrets
- * ================================================================ */
-
-/* --- TOY NPC DATA --- */
-const TOY_NPCS = [
-  { name:'Woody',tag:'woody',color:0xc06030,accent:0xdec040,pos:[-15,0.175,8],
-    greetings:["Howdy partner! There's a key around here somewhere!","That ol' vacuum cleaner is real mean. Watch your tail!","The cat's asleep in the living room. Tiptoe real quiet.","Reachin' the attic's a big climb. Look for ladder rungs!"],
-    meetGreeting:"Howdy! Name's Woody. These toys come alive when the humans ain't lookin'! The front door's locked but there's 3 keys hid around the house." },
-  { name:'Rex',tag:'rex',color:0x40a060,accent:0x80d0a0,pos:[6,0.175,2],
-    greetings:["RAWR! Oh, sorry... I'm not scary, am I?","The cookie jar has something shiny inside!","The cabinet code is 1-2-3 — from the blue book!","The attic is spooky but there's treasure!"],
-    meetGreeting:"Oh! A new friend! I'm Rex. I'm a toy dinosaur. The cabinet code is 1-2-3 — I saw it on the blue bookshelf!" },
-  { name:'Hamm',tag:'hamm',color:0xd0a060,accent:0xc08040,pos:[10,0.175,8],
-    greetings:["I may be a piggy bank but I'm no porker!","That bathroom faucet's been drippin' all day.","The key to the front door is in the cookie jar!","The TV in the living room flickers at night."],
-    meetGreeting:"Hamm the Piggy Bank! I know everything in this kitchen. That drip in the bathroom is driving me crazy!" },
-  { name:'Slinky',tag:'slinky',color:0xd07040,accent:0x4020a0,pos:[-22,0.175,-4],
-    greetings:["*slink slink* The playroom is the best!","I saw a coin in the ball pit!","The mirror in the hallway has something behind it.","The blocks can make a bridge!"],
-    meetGreeting:"Well slink my dog! I'm Slinky! The playroom's the best. There's a coin in the ball pit and treasure in the attic!" },
-];
-
-/* --- DAY/NIGHT CYCLE --- */
-const DAY_LEN = 180;
-let dayTime = 0.25;
-let isDaytime = true;
-function getTOD(t) {
-  if(t<0.15)return{ph:'night',lb:'Night',ic:'🌙'};
-  if(t<0.25)return{ph:'dawn',lb:'Dawn',ic:'🌅'};
-  if(t<0.35)return{ph:'morning',lb:'Morning',ic:'☀️'};
-  if(t<0.65)return{ph:'day',lb:'Day',ic:'☀️'};
-  if(t<0.75)return{ph:'afternoon',lb:'Golden',ic:'🌤️'};
-  if(t<0.85)return{ph:'dusk',lb:'Dusk',ic:'🌆'};
-  return{ph:'night',lb:'Night',ic:'🌙'};
-}
-function updateDayNight(dt){
-  dayTime+=dt/DAY_LEN;if(dayTime>1)dayTime-=1;
-  const tod=getTOD(dayTime);isDaytime=tod.ph==='day'||tod.ph==='morning'||tod.ph==='afternoon';
-  document.getElementById('dn-icon').textContent=tod.ic;
-  document.getElementById('dn-text').textContent=tod.lb;
-  const tm=dayTime*24*60,hh=Math.floor(tm/60)%12||12,mm=Math.floor(tm%60);
-  document.getElementById('clock-display').textContent=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0');
-  if(!scene)return;
-  const sunA=(dayTime-0.25)*Math.PI*2,sH=Math.sin(sunA),sB=Math.max(0,sH);
-  const dl=scene.children.find(c=>c.isDirectionalLight&&c.position.y>5);
-  if(dl){dl.intensity=0.3+sB*2.5;dl.position.x=Math.cos(sunA)*15;dl.position.y=5+sH*15;}
-  const al=scene.children.find(c=>c.isAmbientLight);
-  if(al)al.intensity=0.15+sB*0.35;
-  if(scene.fog)scene.fog.density=0.015-sB*0.01;
-  const sk=Math.max(0,Math.min(1,(sH+0.3)/1.3));
-  scene.background=new THREE.Color(`rgb(${10+sk*20},${10+sk*30},${20+sk*50})`);
-}
-/* --- SPEECH --- */
-let spTO=null;
-function showSpeech(speaker,text,dur=4000){
-  const b=document.getElementById('speech-bubble');
-  document.getElementById('sb-speaker').textContent=speaker+':';
-  document.getElementById('sb-text').textContent=text;
-  b.classList.add('visible');
-  clearTimeout(spTO);spTO=setTimeout(()=>b.classList.remove('visible'),dur);
-}
-/* --- TOY NPCs --- */
-let toyNPCs=[];
-function buildToyNPCs(scene,phys){
-  TOY_NPCS.forEach((data,idx)=>{
-    const g=new THREE.Group();
-    const bMat=new THREE.MeshStandardMaterial({color:data.color,roughness:.7});
-    const body=new THREE.Mesh(new THREE.CapsuleGeometry(.2,.4,6,8),bMat);
-    body.position.y=.3;body.castShadow=true;g.add(body);
-    const head=new THREE.Mesh(new THREE.SphereGeometry(.15,8,8),bMat);
-    head.position.y=.7;head.castShadow=true;g.add(head);
-    const wMat=new THREE.MeshStandardMaterial({color:0xffffff});
-    const pMat=new THREE.MeshStandardMaterial({color:0x222222});
-    for(const ex of[-.05,.05]){
-      g.add(new THREE.Mesh(new THREE.SphereGeometry(.04,6,6),wMat).position.set(ex,.73,.14));
-      g.add(new THREE.Mesh(new THREE.SphereGeometry(.02,6,6),pMat).position.set(ex,.72,.17));
-    }
-    if(data.tag==='woody'){
-      const hMat=new THREE.MeshStandardMaterial({color:0x8a6a3a,roughness:.6});
-      const brim=new THREE.Mesh(new THREE.CylinderGeometry(.25,.3,.03,8),hMat);
-      brim.position.y=.82;g.add(brim);
-      g.add(new THREE.Mesh(new THREE.CylinderGeometry(.12,.15,.12,8),hMat).position.set(0,.89,0));
-    }else if(data.tag==='rex'){
-      const sMat=new THREE.MeshStandardMaterial({color:0x307050,roughness:.6});
-      for(let i=-.08;i<=.08;i+=.04)
-        g.add(new THREE.Mesh(new THREE.ConeGeometry(.03,.08,4),sMat).position.set(i,.78,.05));
-    }else if(data.tag==='hamm'){
-      g.add(new THREE.Mesh(new THREE.BoxGeometry(.06,.02,.04),new THREE.MeshStandardMaterial({color:0x222,roughness:.3,metalness:.5})).position.set(0,.78,.15));
-      g.scale.set(1.2,1,1.2);
-    }else if(data.tag==='slinky'){
-      const cMat=new THREE.MeshStandardMaterial({color:data.accent,roughness:.3,metalness:.6});
-      for(let i=0;i<5;i++){const c=new THREE.Mesh(new THREE.TorusGeometry(.12,.02,6,8),cMat);
-        c.position.y=.1+i*.06;c.rotation.x=Math.PI/2;g.add(c);}
-      g.scale.set(.9,.8,.9);
-    }
-    const[px,py,pz]=data.pos;g.position.set(px,py,pz);scene.add(g);
-    const npcB=phys.add(new Body({pos:new THREE.Vector3(px,py,pz),hs:new THREE.Vector3(.25,.3,.25),static:true,tag:'npc_'+data.tag}));
-    const npcD={...data,mesh:g,body:npcB,met:false,gIdx:0,iTime:0,bPhase:Math.random()*Math.PI*2};
-    toyNPCs.push(npcD);
-    const iB=new Body({pos:new THREE.Vector3(px,py,pz),hs:new THREE.Vector3(1.5,1,1.5),static:true,tag:'npcTrig_'+data.tag,isInteractable:true,interactType:'talk',interactPrompt:'Talk to '+data.name,
-      onInteract:()=>{
-        const npc=toyNPCs.find(n=>n.tag===data.tag);if(!npc)return;
-        if(!npc.met){npc.met=true;showSpeech(data.name,data.meetGreeting,6000);sfxQuest();addScore(15,'Met '+data.name+'! +15');
-          GS.quests.toys.progress=(GS.quests.toys.progress||0)+1;updateQuestUI();
-          if(toyNPCs.every(n=>n.met)&&!GS._allToysMet){GS._allToysMet=true;GS.quests.toys.done=true;addScore(50,'All toy friends met! +50');showToast('🧸 You made friends with all the toys!','success');updateQuestUI();}
-        }else{npc.gIdx=(npc.gIdx+1)%data.greetings.length;showSpeech(data.name,data.greetings[npc.gIdx],4000);}
-      }});
-    phys.add(iB);registerInteractable(iB,'talk','Talk to '+data.name,iB.onInteract);
-  });
-}
-function updateToyNPCs(dt,time){
-  for(const npc of toyNPCs){
-    npc.bPhase+=dt*1.5;
-    if(npc.mesh){npc.mesh.position.y=npc.pos[1]+Math.sin(npc.bPhase)*.015;npc.mesh.rotation.y+=dt*.3;}
-  }
-}
-/* --- VACUUM --- */
-let vacuum=null;
-function buildVacuum(scene,phys){
-  const g=new THREE.Group();
-  const vMat=new THREE.MeshStandardMaterial({color:0xcc3333,roughness:.3,metalness:.5});
-  g.add(new THREE.Mesh(new THREE.CylinderGeometry(.4,.45,.5,10),vMat).position.set(0,.25,0));
-  g.add(new THREE.Mesh(new THREE.CylinderGeometry(.35,.4,.15,10),new THREE.MeshStandardMaterial({color:0x222,roughness:.4})).position.set(0,.55,0));
-  const hMat=new THREE.MeshStandardMaterial({color:0x888,roughness:.4,metalness:.6});
-  const h=new THREE.Mesh(new THREE.CylinderGeometry(.04,.04,.4,6),hMat);
-  h.position.set(0,.7,-.35);h.rotation.x=.4;g.add(h);
-  const wMat2=new THREE.MeshStandardMaterial({color:0x222,roughness:.8});
-  for(const sx of[-.2,.2]){const w=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,.04,8),wMat2);
-    w.position.set(sx,.05,.25);w.rotation.x=Math.PI/2;g.add(w);}
-  const eMat=new THREE.MeshStandardMaterial({color:0xff4444,emissive:0xff2222,emissiveIntensity:.5});
-  const eye=new THREE.Mesh(new THREE.SphereGeometry(.06,6,6),eMat);eye.position.set(0,.35,.4);
-  g.add(eye);g.position.set(12,.2,-4);scene.add(g);
-  vacuum={mesh:g,eye:eye,eMat:eMat,pos:new THREE.Vector3(12,.2,-4),pS:new THREE.Vector3(8,.2,-4),pE:new THREE.Vector3(16,.2,-4),spd:2.5,dir:1,alert:5,cSpd:4.5,chasing:false,nTimer:0};
-  phys.add(new Body({pos:new THREE.Vector3(12,.5,-4),hs:new THREE.Vector3(.5,.5,.5),static:true,tag:'vacColl'}));
-}
-function updateVacuum(dt,pp){
-  if(!vacuum)return;
-  const dx=pp.x-vacuum.pos.x,dz=pp.z-vacuum.pos.z,dist=Math.sqrt(dx*dx+dz*dz);
-  const inHall=pp.x>5&&pp.x<18&&pp.z>-12&&pp.z<12;
-  vacuum.chasing=dist<vacuum.alert&&inHall;
-  if(vacuum.chasing){
-    const a=Math.atan2(dx,dz);
-    vacuum.pos.x+=Math.sin(a)*vacuum.cSpd*dt;vacuum.pos.z+=Math.cos(a)*vacuum.cSpd*dt;
-    vacuum.mesh.position.copy(vacuum.pos);vacuum.mesh.rotation.y=a;
-    vacuum.eMat.emissiveIntensity=.5+Math.sin(performance.now()*.01)*.5;
-    document.getElementById('warning-indicator').textContent='🧹⚠️';document.getElementById('warning-indicator').className='show vacuum-alert';
-    document.getElementById('toy-threat').textContent='🧹 VACUUM IS CHASING!';document.getElementById('toy-threat').classList.add('show');
-    if(dist<1.2){GS.health-=dt*15;sfxGhost();const pa=Math.atan2(-dx,-dz);GS._vx=(GS._vx||0)+Math.sin(pa)*8;GS._vz=(GS._vz||0)+Math.cos(pa)*8;}
-    vacuum.nTimer+=dt;if(vacuum.nTimer>.3){vacuum.nTimer=0;sfx(80,.15,'sawtooth',.03);}
-  }else{
-    vacuum.pos.x+=vacuum.spd*vacuum.dir*dt;
-    if(vacuum.pos.x>vacuum.pE.x){vacuum.dir=-1;vacuum.mesh.rotation.y=Math.PI;}
-    if(vacuum.pos.x<vacuum.pS.x){vacuum.dir=1;vacuum.mesh.rotation.y=0;}
-    vacuum.mesh.position.copy(vacuum.pos);vacuum.eMat.emissiveIntensity=.3;
-    document.getElementById('warning-indicator').className='';
-    document.getElementById('toy-threat').classList.remove('show');
-    vacuum.nTimer+=dt;if(vacuum.nTimer>2&&dist<10){vacuum.nTimer=0;sfx(100,.3,'sine',.015);}
-  }
-}
-/* --- CAT --- */
-let catNPC=null;
-function buildCat(scene,phys){
-  const g=new THREE.Group();
-  const fMat=new THREE.MeshStandardMaterial({color:0xe87840,roughness:.85});
-  const fMat2=new THREE.MeshStandardMaterial({color:0xcc6630,roughness:.85});
-  const bMat2=new THREE.MeshStandardMaterial({color:0xf0d0b0,roughness:.85});
-  const dMat=new THREE.MeshStandardMaterial({color:0x222222,roughness:.3});
-  const nMat=new THREE.MeshStandardMaterial({color:0xffaaaa,roughness:.5});
-
-  // Main body — elongated capsule
-  const body=new THREE.Mesh(new THREE.CapsuleGeometry(0.1,0.25,6,8),fMat);
-  body.position.y=0.08;body.rotation.z=Math.PI/2;body.rotation.y=Math.PI/2;body.castShadow=true;
-  g.add(body);
-
-  // Belly — lighter underside
-  const belly=new THREE.Mesh(new THREE.SphereGeometry(0.07,6,6),bMat2);
-  belly.scale.set(1.8,0.45,1);belly.position.set(0,0.02,0.04);
-  g.add(belly);
-
-  // Head — round with pointed chin
-  const head=new THREE.Mesh(new THREE.SphereGeometry(0.07,8,8),fMat);
-  head.position.set(0.18,0.14,0);head.scale.set(1,0.9,0.85);
-  g.add(head);
-
-  // Ears — triangular pointed
-  for(const sx of[-0.03,0.03]){
-    const earOuter=new THREE.Mesh(new THREE.ConeGeometry(0.025,0.035,4),fMat);
-    earOuter.position.set(0.19+sx*0.9,0.21,0);
-    earOuter.rotation.z=sx*0.3;
-    g.add(earOuter);
-    const earInner=new THREE.Mesh(new THREE.ConeGeometry(0.012,0.02,4),nMat);
-    earInner.position.set(0.19+sx*0.9,0.205,0);
-    earInner.rotation.z=sx*0.3;
-    g.add(earInner);
-  }
-
-  // Eyes — almond shaped (elongated spheres)
-  const eMat2=new THREE.MeshStandardMaterial({color:0x44cc44,emissive:0x22aa22,emissiveIntensity:0.4});
-  for(const ex of[-0.025,0.025]){
-    const eye=new THREE.Mesh(new THREE.SphereGeometry(0.018,6,6),eMat2);
-    eye.position.set(0.21+ex*1.2,0.155,0.055);
-    eye.scale.set(1.3,0.7,0.6);
-    g.add(eye);
-    // Pupil — vertical slit
-    const pupil=new THREE.Mesh(new THREE.SphereGeometry(0.008,6,6),dMat);
-    pupil.position.set(0.21+ex*1.2,0.153,0.062);
-    pupil.scale.set(0.5,1.2,0.5);
-    g.add(pupil);
-  }
-
-  // Nose — tiny pink triangle
-  const nose=new THREE.Mesh(new THREE.ConeGeometry(0.005,0.005,4),nMat);
-  nose.position.set(0.24,0.13,0.045);
-  g.add(nose);
-
-  // Whiskers
-  const wMat=new THREE.LineBasicMaterial({color:0xffffff});
-  for(const sx of[-1,1])for(let i=0;i<3;i++){
-    const pts=[new THREE.Vector3(0.22,0.13+sx*0.005,0.05+i*0.01),
-               new THREE.Vector3(0.22+0.05,0.12+sx*0.01,0.05+i*0.015)];
-    g.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),wMat));
-  }
-
-  // Front legs — thicker at bottom (paws)
-  for(const sx of[-0.06,0.06]){
-    const leg=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.018,0.06,6),fMat);
-    leg.position.set(sx,0.03,0.15);leg.castShadow=true;
-    g.add(leg);
-    const paw=new THREE.Mesh(new THREE.SphereGeometry(0.015,6,6),nMat);
-    paw.position.set(sx,0.01,0.16);paw.scale.set(1,0.4,0.8);
-    g.add(paw);
-  }
-
-  // Back legs
-  for(const sx of[-0.06,0.06]){
-    const leg=new THREE.Mesh(new THREE.CylinderGeometry(0.014,0.02,0.065,6),fMat);
-    leg.position.set(sx,0.03,-0.12);leg.castShadow=true;
-    g.add(leg);
-    const paw=new THREE.Mesh(new THREE.SphereGeometry(0.015,6,6),nMat);
-    paw.position.set(sx,0.01,-0.13);paw.scale.set(1,0.4,0.8);
-    g.add(paw);
-  }
-
-  // Tail — long curved with fluffy tip
-  const tailPts=[new THREE.Vector3(0,-0.02,-0.2),new THREE.Vector3(-0.04,0.04,-0.25),
-                 new THREE.Vector3(-0.07,0.12,-0.22),new THREE.Vector3(-0.06,0.2,-0.18)];
-  const tailCurve=new THREE.CatmullRomCurve3(tailPts);
-  const tail=new THREE.Mesh(new THREE.TubeGeometry(tailCurve,10,0.008,5,false),fMat2);
-  g.add(tail);
-
-  // Fluffy tail tip
-  const tip=new THREE.Mesh(new THREE.SphereGeometry(0.015,6,6),fMat2);
-  tip.position.set(-0.06,0.2,-0.18);
-  g.add(tip);
-
-  g.position.set(-13,0.02,10.5);g.rotation.y=-0.5;g.scale.set(2.2,2.2,2.2);
-  scene.add(g);
-
-  catNPC={mesh:g,pos:new THREE.Vector3(-13,0.02,10.5),sleep:new THREE.Vector3(-13,0.02,10.5),sleeping:true,awakeR:3.5,wT:0,state:'sleep',gT:0,eMat:eMat2};
-  phys.add(new Body({pos:new THREE.Vector3(-13,0.2,10.5),hs:new THREE.Vector3(0.3,0.15,0.3),static:true,tag:'catC'}));
-}
-function updateCat(dt,pp){
-  if(!catNPC)return;
-  const dx=pp.x-catNPC.pos.x,dz=pp.z-catNPC.pos.z,dist=Math.sqrt(dx*dx+dz*dz);
-  const inLR=pp.x>-22&&pp.x<-5&&pp.z>2&&pp.z<14;
-  if(catNPC.state==='sleep'){
-    catNPC.mesh.rotation.y=-.3+Math.sin(performance.now()*.0005)*.1;
-    catNPC.eMat.emissiveIntensity=0;
-    if(dist<catNPC.awakeR&&inLR){catNPC.state='awake';catNPC.wT=0;sfx(300,.2,'sawtooth',.02);showToast('🐱 The cat woke up!','info');}
-  }else if(catNPC.state==='awake'){
-    catNPC.wT+=dt;catNPC.gT+=dt;
-    if(catNPC.gT>3){catNPC.gT=0;sfx(200,.4,'sawtooth',.025);}
-    catNPC.eMat.emissiveIntensity=.3+Math.sin(performance.now()*.005)*.2;
-    if(dist<5&&inLR){catNPC.state='hunt';document.getElementById('toy-threat').textContent='🐱 CAT IS STALKING!';document.getElementById('toy-threat').classList.add('show');}
-    if(!inLR||dist>10){catNPC.state='sleep';document.getElementById('toy-threat').classList.remove('show');}
-  }else if(catNPC.state==='hunt'){
-    const a=Math.atan2(dx,dz);
-    catNPC.pos.x+=Math.sin(a)*2*dt;catNPC.pos.z+=Math.cos(a)*2*dt;
-    catNPC.mesh.position.copy(catNPC.pos);catNPC.mesh.rotation.y=a;
-    if(dist<1){GS.health-=dt*20;sfx(400,.1,'square',.04);const ka=Math.atan2(-dx,-dz);GS._vx=(GS._vx||0)+Math.sin(ka)*10;GS._vz=(GS._vz||0)+Math.cos(ka)*10;}
-    catNPC.eMat.emissiveIntensity=.8;
-    if(!inLR||dist>12){catNPC.state='awake';document.getElementById('toy-threat').classList.remove('show');catNPC.pos.copy(catNPC.sleep);}
-  }
-}
-/* --- GRANDFATHER CLOCK --- */
-let gfClock=null;
-function buildClock(scene,phys){
-  const g=new THREE.Group();
-  const wMat3=new THREE.MeshStandardMaterial({color:0x5a3a1a,roughness:.6,metalness:.1});
-  const fMat2=new THREE.MeshStandardMaterial({color:0xf0e8d0,roughness:.5});
-  g.add(new THREE.Mesh(new THREE.BoxGeometry(.6,2.8,.4),wMat3).position.set(0,1.4,0));
-  g.add(new THREE.Mesh(new THREE.BoxGeometry(.5,.3,.35),wMat3).position.set(0,2.95,0));
-  g.add(new THREE.Mesh(new THREE.CircleGeometry(.15,12),fMat2).position.set(0,1.6,.21));
-  g.add(new THREE.Mesh(new THREE.BoxGeometry(.35,.6,.05),wMat3).position.set(0,.6,0));
-  const pMat2=new THREE.MeshStandardMaterial({color:0xd4a34a,roughness:.3,metalness:.8});
-  const pr=new THREE.Mesh(new THREE.CylinderGeometry(.01,.01,.4,4),pMat2);pr.position.y=.7;
-  g.add(pr);const pd=new THREE.Mesh(new THREE.CylinderGeometry(.06,.06,.02,8),pMat2);pd.position.y=.5;
-  g.add(pd);g.position.set(12,.1,2);scene.add(g);
-  gfClock={mesh:g,pr:pr,pd:pd,wound:false,swing:0,time:0};
-  const cB=phys.add(new Body({pos:new THREE.Vector3(12,1,2),hs:new THREE.Vector3(.5,1.5,.5),static:true,tag:'gfClock',isInteractable:true,interactType:'activate',interactPrompt:'Wind the grandfather clock',data:{points:25}}));
-  registerInteractable(cB,'activate','Wind the grandfather clock',()=>{
-    if(!GS._clockWound&&GS.quests.clock){GS._clockWound=true;GS.quests.clock.done=true;addScore(25,'🕰️ Wound the clock! +25');sfxQuest();showToast('🕰️ The grandfather clock chimes!','success');
-      setTimeout(()=>sfx(523,.5,'sine',.04),100);setTimeout(()=>sfx(659,.5,'sine',.04),300);setTimeout(()=>sfx(784,.5,'sine',.04),500);setTimeout(()=>sfx(1047,1,'sine',.05),700);
-      updateQuestUI();burstSparkles(12,2,2,15);}
-  });
-}
-function updateClock(dt){if(!gfClock)return;gfClock.time+=dt;gfClock.swing=Math.sin(gfClock.time*2.5)*.3;if(gfClock.pr){gfClock.pr.rotation.z=gfClock.swing;gfClock.pd.rotation.z=gfClock.swing;}}
-/* --- LIGHT RAYS --- */
-function buildLightRays(scene){
-  const rMat=new THREE.MeshBasicMaterial({color:0xfff5e0,transparent:true,opacity:.035,blending:THREE.AdditiveBlending,side:THREE.DoubleSide,depthWrite:false});
-  for(let i=0;i<6;i++)for(let j=0;j<2;j++){const wx=-18+i*6;
-    const r=new THREE.Mesh(new THREE.PlaneGeometry(2.5,4.5),rMat);
-    r.position.set(wx+(Math.random()-.5)*.5,4+Math.random()*2,-15.8);
-    r.rotation.y=Math.random()*.3-.15;scene.add(r);}
-}
-/* --- TOY MUSIC --- */
-let musicNodes=[];
-function startToyMusic(){
-  if(!actx||musicNodes.length>0)return;
-  try{
-    const melody=[262,294,330,349,392,440,494,523];
-    let nIdx=0;
-    const playNext=()=>{
-      if(!GS.running||!actx)return;
-      const f=melody[nIdx%melody.length];
-      const o=actx.createOscillator();const g=actx.createGain();
-      o.type='triangle';o.frequency.setValueAtTime(f,actx.currentTime);o.frequency.setValueAtTime(f*1.5,actx.currentTime+.15);
-      g.gain.setValueAtTime(.008,actx.currentTime);g.gain.exponentialRampToValueAtTime(.001,actx.currentTime+.4);
-      o.connect(g);g.connect(actx.destination);o.start();o.stop(actx.currentTime+.4);
-      musicNodes.push(o);nIdx=(nIdx+1)%(melody.length+3);
-      setTimeout(playNext,1500+Math.random()*2000);
-    };
-    setTimeout(playNext,2000);
-  }catch(e){}
-}
-
-
-
-/* --- QUEST GUIDANCE SYSTEM --- */
-const QUEST_GUIDES = {
-  main: [
-    { hint: 'Talk to Woody in the living room — he knows where keys are!', room: 'Living Room', pos: [-15, 0.5, 8] },
-    { hint: 'Find the cookie jar in the kitchen — something shiny is inside!', room: 'Kitchen', pos: [9, 0.5, 2] },
-    { hint: 'Look under the bed in the bedroom — something glints!', room: 'Bedroom', pos: [-14, 0.5, -4] },
-    { hint: 'Check behind the mirror in the hallway!', room: 'Hallway', pos: [16, 0.5, -14] },
-  ],
-  toy: { hint: 'Head to the living room and open the toy box!', pos: [-17, 0.5, 9] },
-  plant: { hint: 'Find the watering can in the hallway!', pos: [14, 0.5, -10] },
-  faucet: { hint: 'Go to the bathroom and turn off the faucet!', pos: [1.5, 0.5, -20] },
-  cabinet: { hint: 'The playroom cabinet has a 3-digit code. Check the blue book on the bookshelf!', pos: [-25, 0.5, -1] },
-  attic: { hint: 'Climb the ladder in the bedroom to reach the attic!', pos: [-18, 0.5, -3] },
-  toys: { hint: 'Find and talk to all 4 toy characters around the house!', pos: [0, 0.5, 0] },
-  clock: { hint: 'Find the grandfather clock in the hallway and wind it!', pos: [12, 0.5, 2] },
-};
-
-function getActiveQuestGuide() {
-  const q = GS.quests;
-  if (!q.main.done) return { id: 'main', ...QUEST_GUIDES.main[Math.min(GS.keysFound, QUEST_GUIDES.main.length-1)] };
-  if (!q.toys.done) return { id: 'toys', ...QUEST_GUIDES.toy };
-  if (!q.toy.done) return { id: 'toy', ...QUEST_GUIDES.toy };
-  if (!q.plant.done) return { id: 'plant', ...QUEST_GUIDES.plant };
-  if (!q.faucet.done) return { id: 'faucet', ...QUEST_GUIDES.faucet };
-  if (!q.cabinet.done) return { id: 'cabinet', ...QUEST_GUIDES.cabinet };
-  if (!q.clock.done) return { id: 'clock', ...QUEST_GUIDES.clock };
-  if (!q.attic.done) return { id: 'attic', ...QUEST_GUIDES.attic };
-  return null;
-}
-
-let guideArrow = null;
-let guideLabel = null;
-
-function buildQuestGuide(scene) {
-  // Create waypoint marker
-  const arrowMat = new THREE.MeshBasicMaterial({ color: 0xf0a030, transparent: true, opacity: 0.6 });
-  const arrow = new THREE.Mesh(new THREE.ConeGeometry(0.15, 0.3, 6), arrowMat);
-  arrow.position.y = 2.5;
-  arrow.visible = false;
-  scene.add(arrow);
-  guideArrow = arrow;
-
-  // Create floating waypoint label billboard
-  const canvas = document.createElement('canvas');
-  canvas.width = 256; canvas.height = 64;
-  const ctx = canvas.getContext('2d');
-  ctx.fillStyle = 'rgba(0,0,0,0)';
-  ctx.fillRect(0, 0, 256, 64);
-  const tex = new THREE.CanvasTexture(canvas);
-  tex.needsUpdate = true;
-  const spriteMat = new THREE.SpriteMaterial({ map: tex, transparent: true, opacity: 0.9, depthTest: false });
-  const sprite = new THREE.Sprite(spriteMat);
-  sprite.position.y = 3.5;
-  sprite.scale.set(1.5, 0.4, 1);
-  sprite.visible = false;
-  scene.add(sprite);
-  guideLabel = { sprite, tex, ctx, canvas };
-}
-
-function updateQuestGuide(dt, playerPos) {
-  if (!guideArrow || !guideLabel) return;
-
-  const guide = getActiveQuestGuide();
-  if (!guide || !guide.pos) {
-    guideArrow.visible = false;
-    guideLabel.sprite.visible = false;
-    return;
-  }
-
-  const [tx, ty, tz] = guide.pos;
-  const target = new THREE.Vector3(tx, ty, tz);
-  const dist = playerPos.distanceTo(target);
-
-  // Don't show waypoint if already at the target
-  if (dist < 3) {
-    guideArrow.visible = false;
-    guideLabel.sprite.visible = false;
-    return;
-  }
-
-  // Show floating arrow pointing toward target
-  guideArrow.visible = true;
-  guideArrow.position.copy(playerPos);
-  guideArrow.position.y = 2.0;
-
-  const dx = tx - playerPos.x;
-  const dz = tz - playerPos.z;
-  guideArrow.rotation.y = Math.atan2(dx, dz) + Math.PI;
-
-  // Bob the arrow
-  guideArrow.position.y += Math.sin(performance.now() * 0.003) * 0.1;
-
-  // Show floating label
-  guideLabel.sprite.visible = true;
-
-  // Update label text
-  const canvas = guideLabel.canvas;
-  const ctx = guideLabel.ctx;
-  ctx.clearRect(0, 0, 256, 64);
-
-  // Background
-  ctx.fillStyle = 'rgba(15, 12, 18, 0.75)';
-  ctx.beginPath();
-  ctx.roundRect(10, 5, 236, 54, 12);
-  ctx.fill();
-
-  // Border
-  ctx.strokeStyle = '#f0a030';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  ctx.roundRect(10, 5, 236, 54, 12);
-  ctx.stroke();
-
-  // Text
-  ctx.fillStyle = '#f0e8d8';
-  ctx.font = 'bold 18px Fredoka, sans-serif';
-  ctx.fillText('🎯 ' + (guide.hint || 'Go here!'), 20, 40);
-
-  guideLabel.tex.needsUpdate = true;
-
-  // Position the label at target
-  guideLabel.sprite.position.set(tx, 4.0, tz);
-}
-
-// Add roundRect polyfill for canvas if needed
-if (!CanvasRenderingContext2D.prototype.roundRect) {
-  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
-    if (r > w/2) r = w/2;
-    if (r > h/2) r = h/2;
-    this.moveTo(x + r, y);
-    this.lineTo(x + w - r, y);
-    this.quadraticCurveTo(x + w, y, x + w, y + r);
-    this.lineTo(x + w, y + h - r);
-    this.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-    this.lineTo(x + r, y + h);
-    this.quadraticCurveTo(x, y + h, x, y + h - r);
-    this.lineTo(x, y + r);
-    this.quadraticCurveTo(x, y, x + r, y);
-    this.closePath();
-  };
-}
-
-
 /* ---------- INIT ---------- */
 function init(){
   try{
@@ -1588,8 +1045,6 @@ function init(){
     buildHouse(scene,phys);buildLivingRoom(scene,phys);buildKitchen(scene,phys);buildBedroom(scene,phys);
     buildBathroom(scene,phys);buildHallway(scene,phys);buildPlayroom(scene,phys);buildAttic(scene,phys);
     buildCity(scene);dustPts=buildDust(scene);sparklePts=initSparkles(scene);
-    buildLightRays(scene);buildToyNPCs(scene,phys);buildVacuum(scene,phys);buildCat(scene,phys);buildClock(scene,phys);
-    buildQuestGuide(scene);
     mouseChar=createMouseChar(GS.charColor);mouseChar.position.set(2,.175,5);scene.add(mouseChar);
     mouseBody=new Body({pos:new THREE.Vector3(2,.175,5),hs:new THREE.Vector3(.3,.18,.55),mass:1,tag:'player',friction:.85,bounce:0});phys.add(mouseBody);
     camSmooth.set(2,3,10);camLookSmooth.set(2,.5,5);
@@ -1609,8 +1064,8 @@ function showStart(){
   document.getElementById('color-picker').classList.add('visible');
   document.querySelectorAll('.color-btn').forEach(b=>{b.addEventListener('click',()=>{document.querySelectorAll('.color-btn').forEach(x=>x.classList.remove('selected'));b.classList.add('selected');GS.charColor=b.dataset.color;});});
   const btn=document.getElementById('start-btn');btn.classList.add('visible');
-  btn.onclick=()=>{ensureAudio();startAmbient();GS.running=true;GS.health=100;GS.deleteSave();document.getElementById('loading-screen').classList.add('hidden');document.getElementById('welcome-overlay').classList.add('show');updateQuestUI();scene.remove(mouseChar);mouseChar=createMouseChar(GS.charColor);mouseChar.position.copy(mouseBody.pos);mouseChar.rotation.y=mouseBody.rot;scene.add(mouseChar);};
-  document.getElementById('welcome-start').onclick=()=>{document.getElementById('welcome-overlay').classList.remove('show');setTimeout(startToyMusic,1000);};
+  btn.onclick=()=>{ensureAudio();startAmbient();GS.running=true;GS.deleteSave();document.getElementById('loading-screen').classList.add('hidden');document.getElementById('welcome-overlay').classList.add('show');updateQuestUI();scene.remove(mouseChar);mouseChar=createMouseChar(GS.charColor);mouseChar.position.copy(mouseBody.pos);mouseChar.rotation.y=mouseBody.rot;scene.add(mouseChar);};
+  document.getElementById('welcome-start').onclick=()=>{document.getElementById('welcome-overlay').classList.remove('show');};
   const cbtn=document.getElementById('continue-btn');
   if(GS.hasSave()){
     cbtn.classList.add('visible');cbtn.style.opacity='1';cbtn.style.color='var(--accent)';cbtn.style.borderColor='var(--accent)';
@@ -1650,12 +1105,6 @@ function loop(){
   const dt=Math.min(clock.getDelta(),.1);acc+=dt;
   while(acc>=FDT){tickPhysics(FDT);acc-=FDT;}
   tickCamera(dt);tickAnims(dt);tickDust(dt);tickSparkles(dt);tickPrompt();tickDrip(dt);tickTV(dt);tickSpecial(dt);tickMinimap();
-  updateDayNight(dt);
-  updateToyNPCs(dt,clock.getElapsedTime());
-  updateVacuum(dt,mouseBody.pos);
-  updateCat(dt,mouseBody.pos);
-  updateClock(dt);
-  updateQuestGuide(dt,mouseBody.pos);
   composer.render();
 }
 function tickPhysics(dt){
@@ -1685,14 +1134,6 @@ function tickPhysics(dt){
   for(const b of phys.bodies)if(b.mesh&&b.tag!=='player'&&!b.data?.hidden)b.mesh.position.copy(b.pos);
   const p=mouseBody.pos;
   p.x=Math.max(-27.3,Math.min(19.3,p.x));p.z=Math.max(-15.3,Math.min(15.3,p.z));
-  if (GS.health === undefined) GS.health = 100;
-  GS.health = Math.max(0, Math.min(100, GS.health));
-  if (GS.health <= 0) {
-    GS.health = 100;
-    mouseBody.pos.set(2,0.5,5);
-    mouseBody.vel.set(0,0,0);
-    showToast('💫 Respawned at the entrance!','info');
-  }
   if(!key2Revealed&&p.distanceTo(new THREE.Vector3(-14,0,-4))<3){
     key2Revealed=true;const k2b=phys.bodies.find(b=>b.tag==='key2');
     if(k2b&&k2b.mesh){k2b.mesh.visible=true;k2b.data.hidden=false;registerInteractable(k2b,'collect','Key under the bed!',()=>{});showToast('🔑 Something glints under the bed!','info');}
@@ -1720,6 +1161,7 @@ function tickDust(dt){
 function tickDrip(dt){if(GS.quests.faucet.done)return;dripPhase+=dt;const d=scene.children.find(c=>c.geometry?.type==='SphereGeometry'&&c.position.distanceTo(new THREE.Vector3(1.5,2.15,-20))<.1);if(d)d.position.y=2.15+Math.sin(dripPhase*3)*.08;}
 function tickTV(dt){if(!tvOn)return;tvTime+=dt;if(tvTime>.08){tvTime=0;updateTVStatic();}}
 function tickSpecial(dt){
+  if(GS.quests.main.done&&!GS._escaped){const p=mouseBody.pos;if(p.distanceTo(new THREE.Vector3(0,0,14.5))<3){GS._escaped=true;completeGame();}}
   if(!GS.quests.attic.done&&mouseBody.pos.y>9){GS.quests.attic.done=true;sfxQuest();showToast('🏰 You reached the attic! Explore it!','success');addScore(25,'Reached the attic! +25');updateQuestUI();}
 }
 function tickPrompt(){
@@ -1736,16 +1178,5 @@ window.GS=GS;
 /* ---------- START ---------- */
 init();loop();
 </script>
-
-<!-- ===== TOY STORY ENHANCEMENTS ===== -->
-<div id="daynight-indicator"><span id="dn-icon">☀️</span><span id="dn-text">Day</span></div>
-<div id="region-label">🏡 Welcome to the House</div>
-<div class="hud-health-bar"><div class="hud-health-fill" id="health-display"></div></div>
-<div id="speech-bubble"><span class="sb-speaker" id="sb-speaker"></span><span class="sb-text" id="sb-text"></span></div>
-<div id="warning-indicator"></div>
-<div class="clockhz"><div class="cd-time" id="clock-display">--:--</div></div>
-<div id="secret-counter">🔍 Secrets: <span id="secret-count">0</span></div>
-<div id="toy-threat"></div>
-
 </body>
 </html>

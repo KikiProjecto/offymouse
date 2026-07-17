@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-<title>offymouse toy story</title>
+<title>Toy Story Adventure — The Whole House Is Your World</title>
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
@@ -779,8 +778,8 @@ function addSB(w,h,d,x,y,z){phys.add(new Body({pos:new THREE.Vector3(x,y,z),hs:n
 
 /* ---------- BUILD HOUSE ---------- */
 function buildHouse(scene,phys){
-  const wallMat=new THREE.MeshStandardMaterial({color:0xeee8dd,roughness:.75,aoMapIntensity:1});
-  const woodFloor=new THREE.MeshStandardMaterial({map:makeWoodTex('#8a7050'),roughness:.45,metalness:.04,aoMapIntensity:1});
+  const wallMat=new THREE.MeshStandardMaterial({color:0xe8dcc8,roughness:.85});
+  const woodFloor=new THREE.MeshStandardMaterial({map:makeWoodTex('#8a7050'),roughness:.6,metalness:.02});
   const ceilMat=new THREE.MeshStandardMaterial({color:0xf0ece4,roughness:.9,side:THREE.DoubleSide});
   const wt=.3,rH=HH;
   function makeWall(w,h,mat,x,y,z){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,mat===wallMat?wt:.2),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;scene.add(m);allBuildingMeshes.push(m);}
@@ -813,7 +812,7 @@ function buildHouse(scene,phys){
   ceil.position.set(-(pW/2),rH+.08,0);scene.add(ceil);allBuildingMeshes.push(ceil);
   // Windows
   const nW=6,wW=(mW-4)/nW;
-  const glassMat=new THREE.MeshPhysicalMaterial({color:0xa0d0f0,transparent:true,opacity:.12,roughness:.02,metalness:.1,clearcoat:1,clearcoatRoughness:.1,side:THREE.DoubleSide});
+  const glassMat=new THREE.MeshPhysicalMaterial({color:0xa0c8e8,transparent:true,opacity:.08,roughness:.05,side:THREE.DoubleSide});
   const pilMat=new THREE.MeshStandardMaterial({color:0x7a6a5a,roughness:.65});
   for(let i=0;i<=nW;i++){const px=-mW2+2+i*wW;const pil=new THREE.Mesh(new THREE.BoxGeometry(.4,rH*.8,.25),pilMat);pil.position.set(px,rH/2,-mD2+.02);pil.castShadow=true;scene.add(pil);allBuildingMeshes.push(pil);}
   for(let i=0;i<nW;i++){const wx=-mW2+2+wW/2+i*wW;const gl=new THREE.Mesh(new THREE.PlaneGeometry(wW-.5,rH*.7),glassMat);gl.position.set(wx,rH/2,-mD2+.06);scene.add(gl);allBuildingMeshes.push(gl);}
@@ -847,7 +846,7 @@ function buildHouse(scene,phys){
   const lMat=new THREE.MeshStandardMaterial({color:0xffffff,emissive:0xfff5e0,emissiveIntensity:2});
   for(const[lx,lz]of[[-7,4],[-7,8],[7,4],[7,8],[-7,-4],[-7,-8],[5,-4],[13,-4],[5,-8],[13,-8],[-22,-4]]){
     const lp=new THREE.Mesh(new THREE.BoxGeometry(2.5,.05,.5),lMat);lp.position.set(lx,rH-.05,lz);scene.add(lp);allBuildingMeshes.push(lp);
-    const pl=new THREE.PointLight(0xfff5e0,2.5,12,1.2);pl.position.set(lx,rH-.6,lz);scene.add(pl);pl.userData={flicker:true,baseIntensity:2.5,amount:0.15,speed:2+Math.random()*3,offset:Math.random()*6.28};
+    const pl=new THREE.PointLight(0xfff5e0,2.5,12,1.2);pl.position.set(lx,rH-.6,lz);scene.add(pl);
   }
   scene.add(new THREE.AmbientLight(0x404060,.35));
 }
@@ -863,7 +862,7 @@ function buildLivingRoom(scene,phys){
   // Couch cushion and arm physics
   for(let i=0;i<3;i++)addSB(2.2,.5,2.5,-12+(i-1)*2.4,1.5,6);
   for(const sx of[-1,1])addSB(.8,2,.8,-12+sx*3.8,1.75,6);
-  const ct=new THREE.Mesh(new THREE.BoxGeometry(4,.3,2.5),warmMat(0x6a4a30,.5,.1));ct.position.set(-8,2.8,6);ct.castShadow=true;ct.receiveShadow=true;scene.add(ct);allBuildingMeshes.push(ct);addSB(4,.3,2.5,-8,2.8,6);
+  const ct=new THREE.Mesh(new THREE.BoxGeometry(4,.3,2.5),warmMat(0x6a4a30,.5,.1));ct.position.set(-8,2.8,6);ct.castShadow=true;ct.receiveShadow=true;scene.add(ct);allBuildingMeshes.push(ct);addSB(2,.15,1.25,-8,2.8,6);
   for(const[ox,oz]of[[-1.8,-1],[1.8,-1],[-1.8,1],[1.8,1]]){const leg=new THREE.Mesh(new THREE.CylinderGeometry(.06,.08,2.6,6),warmMat(0x3a2a1a,.4,.3));leg.position.set(-8+ox,1.5,6+oz);scene.add(leg);allBuildingMeshes.push(leg);}
   const mag=new THREE.Mesh(new THREE.BoxGeometry(.8,.03,.5),warmMat(0xe0d080,.7));mag.position.set(-7.5,2.96,6.5);mag.castShadow=true;scene.add(mag);allBuildingMeshes.push(mag);
   registerInteractable(phys.add(new Body({pos:new THREE.Vector3(-7.5,2.96,6.5),hs:new THREE.Vector3(.4,.015,.25),mass:.2,tag:'magazine',mesh:mag,friction:.7})),'push','Push magazine');
@@ -875,11 +874,11 @@ function buildLivingRoom(scene,phys){
   const scMat=new THREE.MeshStandardMaterial({map:tvTex,emissive:0x1a2a4a,emissiveIntensity:.3,roughness:.2});
   const sc=new THREE.Mesh(new THREE.PlaneGeometry(1.8,1.4),scMat);sc.position.set(-12,1.5,9.01);scene.add(sc);allBuildingMeshes.push(sc);
   const tvI=new Body({pos:new THREE.Vector3(-12,1.5,9),hs:new THREE.Vector3(1,.8,.1),static:true,tag:'tv',isInteractable:true,interactType:'activate',interactPrompt:'Turn on TV',data:{points:5}});
-  phys.add(tvI);registerInteractable(tvI,'activate','Turn on TV',()=>{toggleTV();scMat.emissive=tvOn?new THREE.Color(0x4080c0):new THREE.Color(0x1a2a4a);scMat.emissiveIntensity=tvOn?.8:.3;tvI.interactPrompt=tvOn?'Turn off TV':'Turn on TV';});
+  phys.add(tvI);registerInteractable(tvI,'activate','Turn on TV',()=>{toggleTV();scMat.emissive=tvOn?new THREE.Color(0x4060a0):new THREE.Color(0x1a2a4a);scMat.emissiveIntensity=tvOn?.6:.3;tvI.interactPrompt=tvOn?'Turn off TV':'Turn on TV';});
   const sh=new THREE.Mesh(new THREE.BoxGeometry(2.5,6,1.2),warmMat(0x8a7050,.6));sh.position.set(-17,3,2);sh.castShadow=true;scene.add(sh);allBuildingMeshes.push(sh);addSB(1.25,3,.6,-17,3,2);
   for(let i=0;i<4;i++){const b=new THREE.Mesh(new THREE.BoxGeometry(2.2,.08,1.1),warmMat(0x7a6040));b.position.set(-17,.5+i*1.5,2);scene.add(b);allBuildingMeshes.push(b);}
   // Bookshelf shelf physics (each shelf + back)
-  for(let i=0;i<4;i++)addSB(2.2,.2,1.1,-17,.5+i*1.5,2);
+  for(let i=0;i<4;i++)addSB(2.2,.08,1.1,-17,.5+i*1.5,2);
   addSB(2.5,6,.15,-17,3,1.5);
   const bookColors=[0xc04040,0x40a060,0x4060c0,0xc0a040,0xa060c0,0x40a0c0,0xc06040,0x60a060];
   for(let i=0;i<8;i++){
@@ -907,12 +906,12 @@ function buildLivingRoom(scene,phys){
 
 /* ---------- KITCHEN ---------- */
 function buildKitchen(scene,phys){
-  const tbl=new THREE.Mesh(new THREE.BoxGeometry(5,.2,3.5),warmMat(0x8a7050,.5,.1));tbl.position.set(8,3.2,6);tbl.castShadow=true;tbl.receiveShadow=true;scene.add(tbl);allBuildingMeshes.push(tbl);addSB(5,.2,3.5,8,3.2,6);
+  const tbl=new THREE.Mesh(new THREE.BoxGeometry(5,.2,3.5),warmMat(0x8a7050,.5,.1));tbl.position.set(8,3.2,6);tbl.castShadow=true;tbl.receiveShadow=true;scene.add(tbl);allBuildingMeshes.push(tbl);addSB(2.5,.1,1.75,8,3.2,6);
   for(const[ox,oz]of[[-2.2,-1.5],[2.2,-1.5],[-2.2,1.5],[2.2,1.5]]){const leg=new THREE.Mesh(new THREE.CylinderGeometry(.07,.09,3,6),warmMat(0x4a3a2a,.4,.3));leg.position.set(8+ox,1.6,6+oz);scene.add(leg);allBuildingMeshes.push(leg);addSB(.14,.06,.14,8+ox,1.6,6+oz);}
   for(let i=0;i<4;i++){const a=i*Math.PI/2,cx=8+Math.sin(a)*2.8,cz=6+Math.cos(a)*2.2;const seat=new THREE.Mesh(new THREE.BoxGeometry(1,.15,1),warmMat(0x6a5030,.7));seat.position.set(cx,2.8,cz);seat.castShadow=true;scene.add(seat);allBuildingMeshes.push(seat);const back=new THREE.Mesh(new THREE.BoxGeometry(1,1.2,.08),warmMat(0x6a5030,.7));back.position.set(cx,3.6,cz-Math.cos(a)*.4);scene.add(back);allBuildingMeshes.push(back);addSB(1,1.2,.08,cx,3.6,cz-Math.cos(a)*.4);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(cx,1.5,cz),hs:new THREE.Vector3(.5,1.5,.5),mass:1.5,tag:'chair',mesh:seat})),'push','Push chair');}
   const fridge=new THREE.Mesh(new THREE.BoxGeometry(2.2,5,1.8),warmMat(0xe8e8e8,.4,.6));fridge.position.set(15,2.5,8);fridge.castShadow=true;scene.add(fridge);allBuildingMeshes.push(fridge);addSB(1.1,2.5,.9,15,2.5,8);
-  const fridgeDoor=new THREE.Mesh(new THREE.BoxGeometry(.02,4.5,1.6),warmMat(0xcccccc,.3,.5));fridgeDoor.position.set(15,2.5,7.1);scene.add(fridgeDoor);allBuildingMeshes.push(fridgeDoor);addSB(1.05,2.2,.8,15,2.5,7.1);
-  const cntr=new THREE.Mesh(new THREE.BoxGeometry(5,.5,2),warmMat(0xd0c8b8,.5));cntr.position.set(12,2.75,3);cntr.castShadow=true;scene.add(cntr);allBuildingMeshes.push(cntr);addSB(5,.5,2,12,2.75,3);
+  const fridgeDoor=new THREE.Mesh(new THREE.BoxGeometry(.02,4.5,1.6),warmMat(0xcccccc,.3,.5));fridgeDoor.position.set(15,2.5,7.1);scene.add(fridgeDoor);allBuildingMeshes.push(fridgeDoor);
+  const cntr=new THREE.Mesh(new THREE.BoxGeometry(5,.5,2),warmMat(0xd0c8b8,.5));cntr.position.set(12,2.75,3);cntr.castShadow=true;scene.add(cntr);allBuildingMeshes.push(cntr);addSB(2.5,.25,1,12,2.75,3);
   for(const[ox,oz]of[[-2.3,-.8],[2.3,-.8],[-2.3,.8],[2.3,.8]]){const leg=new THREE.Mesh(new THREE.CylinderGeometry(.06,.08,2.5,6),warmMat(0x5a4a3a,.4,.3));leg.position.set(12+ox,1.25,3+oz);scene.add(leg);allBuildingMeshes.push(leg);addSB(.12,.06,.12,12+ox,1.25,3+oz);}
   for(let i=0;i<3;i++){const plate=new THREE.Mesh(new THREE.CylinderGeometry(.2,.18,.02,10),warmMat(0xf0f0f0,.4));plate.position.set(11+i*.5,3.02,3.5);scene.add(plate);allBuildingMeshes.push(plate);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(11+i*.5,3.02,3.5),hs:new THREE.Vector3(.2,.01,.2),mass:.2,tag:'plate',mesh:plate})),'push','Push plate');}
   const cup=new THREE.Mesh(new THREE.CylinderGeometry(.1,.08,.18,8),warmMat(0x4080c0,.3,.1));cup.position.set(13,3.1,3.5);scene.add(cup);allBuildingMeshes.push(cup);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(13,3.1,3.5),hs:new THREE.Vector3(.1,.09,.1),mass:.25,tag:'cup',mesh:cup})),'push','Push cup');
@@ -924,26 +923,26 @@ function buildKitchen(scene,phys){
 /* ---------- BEDROOM ---------- */
 function buildBedroom(scene,phys){
   const frame=new THREE.Mesh(new THREE.BoxGeometry(6,1.2,5),warmMat(0x5a4a3a,.7));frame.position.set(-14,.6,-6);frame.castShadow=true;frame.receiveShadow=true;scene.add(frame);allBuildingMeshes.push(frame);addSB(3,.6,2.5,-14,.6,-6);
-  const mat=new THREE.Mesh(new THREE.BoxGeometry(5.5,.5,4.5),warmMat(0xc0b8d0,.85));mat.position.set(-14,1.3,-6);mat.castShadow=true;scene.add(mat);allBuildingMeshes.push(mat);addSB(5.5,.5,4.5,-14,1.3,-6);
+  const mat=new THREE.Mesh(new THREE.BoxGeometry(5.5,.5,4.5),warmMat(0xc0b8d0,.85));mat.position.set(-14,1.3,-6);mat.castShadow=true;scene.add(mat);allBuildingMeshes.push(mat);addSB(2.75,.25,2.25,-14,1.3,-6);
   for(let i=0;i<3;i++){const p=new THREE.Mesh(new THREE.BoxGeometry(.8,.25,.6),warmMat(0xf0e8f0,.85));p.position.set(-14+(i-1)*.7,1.7,-3.8);scene.add(p);allBuildingMeshes.push(p);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(-14+(i-1)*.7,1.7,-3.8),hs:new THREE.Vector3(.4,.125,.3),mass:.3,tag:'pillow',mesh:p})),'push','Push pillow');}
   const bl=new THREE.Mesh(new THREE.BoxGeometry(3.5,.08,3),warmMat(0x4060a0,.85));bl.position.set(-16,1.55,-6);scene.add(bl);allBuildingMeshes.push(bl);addSB(3.5,.08,3,-16,1.55,-6);
-  const ns=new THREE.Mesh(new THREE.BoxGeometry(1.5,2,1),warmMat(0x6a5030,.5,.1));ns.position.set(-8,1,-3);ns.castShadow=true;scene.add(ns);allBuildingMeshes.push(ns);addSB(1.5,2,1,-8,1,-3);
+  const ns=new THREE.Mesh(new THREE.BoxGeometry(1.5,2,1),warmMat(0x6a5030,.5,.1));ns.position.set(-8,1,-3);ns.castShadow=true;scene.add(ns);allBuildingMeshes.push(ns);addSB(.75,1,.5,-8,1,-3);
   const blb=new THREE.Mesh(new THREE.CylinderGeometry(.15,.2,.08,8),warmMat(0x3a3a3a,.3,.5));blb.position.set(-8,2.04,-3);scene.add(blb);allBuildingMeshes.push(blb);
   const closet=new THREE.Mesh(new THREE.BoxGeometry(3,6,1),warmMat(0x7a6a5a,.6));closet.position.set(-5,3,-1);closet.castShadow=true;scene.add(closet);allBuildingMeshes.push(closet);addSB(3,6,1,-5,3,-1);
-  const headboard=new THREE.Mesh(new THREE.BoxGeometry(6,2,.3),warmMat(0x5a4a3a,.7));headboard.position.set(-14,2,-8.5);scene.add(headboard);allBuildingMeshes.push(headboard);addSB(3,2,.15,-14,2,-8.5);
+  const headboard=new THREE.Mesh(new THREE.BoxGeometry(6,2,.3),warmMat(0x5a4a3a,.7));headboard.position.set(-14,2,-8.5);scene.add(headboard);allBuildingMeshes.push(headboard);addSB(3,1,.15,-14,2,-8.5);
   for(let i=0;i<6;i++){const bc=[0xe04040,0x40c060,0x4080e0,0xe0c040,0xc060e0][i%5];const block=new THREE.Mesh(new THREE.BoxGeometry(.4,.4,.4),warmMat(bc,.7));block.position.set(-10+(i%3)*.6,.2,-10+Math.floor(i/3)*.6);block.castShadow=true;scene.add(block);allBuildingMeshes.push(block);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(-10+(i%3)*.6,.2,-10+Math.floor(i/3)*.6),hs:new THREE.Vector3(.2,.2,.2),mass:.4,tag:'block',mesh:block})),'push','Push block');}
   const ball=new THREE.Mesh(new THREE.SphereGeometry(.18,10,10),warmMat(0xe8e0d0,.6));ball.position.set(-17,.18,-10);scene.add(ball);allBuildingMeshes.push(ball);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(-17,.18,-10),hs:new THREE.Vector3(.18,.18,.18),mass:.2,tag:'ball',mesh:ball,bounce:.5,friction:.6})),'push','Push ball');
-  const k2=new THREE.Mesh(new THREE.BoxGeometry(.4,.04,.15),new THREE.MeshStandardMaterial({color:0xd4a34a,roughness:.25,metalness:.75,clearcoat:0.3}));k2.position.set(-14,.15,-4);k2.visible=false;scene.add(k2);allBuildingMeshes.push(k2);
+  const k2=new THREE.Mesh(new THREE.BoxGeometry(.4,.04,.15),warmMat(0xd4a34a,.3,.7));k2.position.set(-14,.15,-4);k2.visible=false;scene.add(k2);allBuildingMeshes.push(k2);
   phys.add(new Body({pos:new THREE.Vector3(-14,.15,-4),hs:new THREE.Vector3(.2,.02,.075),mass:.1,tag:'key2',mesh:k2,data:{isKey:true,hidden:true,points:30}}));
 }
 
 /* ---------- BATHROOM ---------- */
 function buildBathroom(scene,phys){
-  const tub=new THREE.Mesh(new THREE.BoxGeometry(3,1.5,2),warmMat(0xe8e8f0,.2,.5));tub.position.set(0,.75,-9);scene.add(tub);allBuildingMeshes.push(tub);addSB(3,.75,2,0,.75,-9);
+  const tub=new THREE.Mesh(new THREE.BoxGeometry(3,1.5,2),warmMat(0xe8e8f0,.2,.5));tub.position.set(0,.75,-9);scene.add(tub);allBuildingMeshes.push(tub);addSB(1.5,.75,1,0,.75,-9);
   // Toilet
-  const toilet=new THREE.Mesh(new THREE.BoxGeometry(1,1.2,.8),warmMat(0xf0f0f0,.2,.3));toilet.position.set(1.5,.6,-9);scene.add(toilet);allBuildingMeshes.push(toilet);addSB(1,.6,.8,1.5,.6,-9);
+  const toilet=new THREE.Mesh(new THREE.BoxGeometry(1,1.2,.8),warmMat(0xf0f0f0,.2,.3));toilet.position.set(1.5,.6,-9);scene.add(toilet);allBuildingMeshes.push(toilet);addSB(.5,.6,.4,1.5,.6,-9);
   const tank=new THREE.Mesh(new THREE.BoxGeometry(.8,.6,.5),warmMat(0xf0f0f0,.2,.3));tank.position.set(1.5,1.1,-8.25);scene.add(tank);allBuildingMeshes.push(tank);addSB(.4,.3,.25,1.5,1.1,-8.25);
-  const sink=new THREE.Mesh(new THREE.BoxGeometry(1.5,.2,1),warmMat(0xcccccc,.2,.5));sink.position.set(1,2.1,-20);scene.add(sink);allBuildingMeshes.push(sink);addSB(1.5,.2,1,1,2.1,-20);
+  const sink=new THREE.Mesh(new THREE.BoxGeometry(1.5,.2,1),warmMat(0xcccccc,.2,.5));sink.position.set(1,2.1,-20);scene.add(sink);allBuildingMeshes.push(sink);addSB(.75,.1,.5,1,2.1,-20);
   const drip=new THREE.Mesh(new THREE.SphereGeometry(.04,6,6),warmMat(0x4080c0,.3));drip.position.set(1.5,2.15,-20);scene.add(drip);allBuildingMeshes.push(drip);
   const fb=new Body({pos:new THREE.Vector3(1.5,2.3,-20),hs:new THREE.Vector3(.1,.15,.1),static:true,tag:'faucet',isInteractable:true,interactType:'activate',interactPrompt:'Turn off faucet',data:{quest:'faucet',points:50}});
   phys.add(fb);registerInteractable(fb,'activate','Turn off faucet',()=>{GS.quests.faucet.done=true;drip.visible=false;sfxQuest();showToast('💧 Fixed the dripping faucet!','success');addScore(50,'Quest: Fixed faucet! +50');burstSparkles(1.5,2.3,-20,10);updateQuestUI();});
@@ -956,7 +955,7 @@ function buildHallway(scene,phys){
   addSB(.3,.08,.3,14,.04,-6);addSB(.1,4.5,.1,14,2.25,-6);
   registerInteractable(phys.add(new Body({pos:new THREE.Vector3(14,2,-6),hs:new THREE.Vector3(.2,2,.2),mass:3,tag:'coatRack'})),'push','Push coat rack');
   const mir=new THREE.Mesh(new THREE.PlaneGeometry(1.5,2),new THREE.MeshPhysicalMaterial({color:0x80a0c0,roughness:.05,metalness:.8,transparent:true,opacity:.25}));mir.position.set(16,2.5,-14);scene.add(mir);allBuildingMeshes.push(mir);
-  const k3=new THREE.Mesh(new THREE.BoxGeometry(.4,.04,.15),new THREE.MeshStandardMaterial({color:0xd4a34a,roughness:.25,metalness:.75,clearcoat:0.3}));k3.position.set(16,2.5,-13.8);k3.visible=false;scene.add(k3);allBuildingMeshes.push(k3);
+  const k3=new THREE.Mesh(new THREE.BoxGeometry(.4,.04,.15),warmMat(0xd4a34a,.3,.7));k3.position.set(16,2.5,-13.8);k3.visible=false;scene.add(k3);allBuildingMeshes.push(k3);
   const k3b=new Body({pos:new THREE.Vector3(16,2.5,-13.8),hs:new THREE.Vector3(.2,.02,.075),mass:.1,tag:'key3',mesh:k3,data:{isKey:true,hidden:true,points:30}});phys.add(k3b);
   const mi=new Body({pos:new THREE.Vector3(16,2.5,-14),hs:new THREE.Vector3(.75,1,.05),static:true,tag:'hallMirror',isInteractable:true,interactType:'activate',interactPrompt:'Inspect mirror',data:{points:10}});phys.add(mi);
   registerInteractable(mi,'activate','Inspect mirror',()=>{
@@ -964,7 +963,7 @@ function buildHallway(scene,phys){
     // Ghost secret: 1 in 5 chance of spooky ghost appearance
     else if(Math.random()<.2&&!GS._ghostShown){GS._ghostShown=true;sfxGhost();showToast('👻 Did something move in the mirror?!','info');burstSparkles(16,2.5,-14,8);}
   });
-  const ht=new THREE.Mesh(new THREE.BoxGeometry(1.5,.15,1),warmMat(0x6a5a4a,.5));ht.position.set(14,2.15,-22);scene.add(ht);allBuildingMeshes.push(ht);addSB(1.5,.15,1,14,2.15,-22);
+  const ht=new THREE.Mesh(new THREE.BoxGeometry(1.5,.15,1),warmMat(0x6a5a4a,.5));ht.position.set(14,2.15,-22);scene.add(ht);allBuildingMeshes.push(ht);addSB(.75,.075,.5,14,2.15,-22);
   const vase=new THREE.Mesh(new THREE.CylinderGeometry(.15,.12,.4,8),warmMat(0x4060a0,.5,.1));vase.position.set(14,2.35,-22);scene.add(vase);allBuildingMeshes.push(vase);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(14,2.35,-22),hs:new THREE.Vector3(.15,.2,.15),mass:.5,tag:'vase',mesh:vase})),'push','Push vase');
   const can=new THREE.Mesh(new THREE.CylinderGeometry(.2,.15,.35,8),warmMat(0x40a060,.4,.3));can.position.set(14,.18,-10);scene.add(can);allBuildingMeshes.push(can);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(14,.18,-10),hs:new THREE.Vector3(.2,.175,.2),mass:.4,tag:'wateringCan',mesh:can,isInteractable:true,interactType:'collect',interactPrompt:'Watering can!',data:{quest:'plant',points:15}})),'collect','Watering can!',()=>{});
   const toy=new THREE.Mesh(new THREE.BoxGeometry(.3,.15,.2),warmMat(0xe06040,.6));toy.position.set(12,.075,-20);scene.add(toy);allBuildingMeshes.push(toy);registerInteractable(phys.add(new Body({pos:new THREE.Vector3(12,.075,-20),hs:new THREE.Vector3(.15,.075,.1),mass:.15,tag:'scatteredToy',mesh:toy})),'push','Push toy');
@@ -991,7 +990,7 @@ function buildPlayroom(scene,phys){
   const mo=new THREE.Mesh(new THREE.TorusGeometry(.15,.03,4,8),warmMat(0x000000));mo.position.set(-27.5,2.85,-12.03);mo.rotation.x=Math.PI;scene.add(mo);allBuildingMeshes.push(mo);
   addSB(1.5,1.2,.05,-27.5,3,-12);
   // Cabinet
-  const cab=new THREE.Mesh(new THREE.BoxGeometry(1.5,3,1),warmMat(0x8a6a4a,.6));cab.position.set(-25,1.5,-1);cab.castShadow=true;scene.add(cab);allBuildingMeshes.push(cab);addSB(1.5,3,1,-25,1.5,-1);
+  const cab=new THREE.Mesh(new THREE.BoxGeometry(1.5,3,1),warmMat(0x8a6a4a,.6));cab.position.set(-25,1.5,-1);cab.castShadow=true;scene.add(cab);allBuildingMeshes.push(cab);addSB(.75,1.5,.5,-25,1.5,-1);
   const cd=new THREE.Mesh(new THREE.BoxGeometry(.02,2.6,.9),warmMat(0x9a8a7a));cd.position.set(-25,1.5,-.5);scene.add(cd);allBuildingMeshes.push(cd);addSB(.02,2.6,.9,-25,1.5,-.5);
   const bat=new THREE.Mesh(new THREE.CylinderGeometry(.12,.15,.25,8),warmMat(0xe0d040,.4,.3));bat.position.set(-25,1.2,-.45);bat.visible=false;scene.add(bat);allBuildingMeshes.push(bat);GS._cabinetBattery=bat;
   const cabB=new Body({pos:new THREE.Vector3(-25,1.5,-1),hs:new THREE.Vector3(.75,1.5,.5),static:true,tag:'cabinet',isInteractable:true,interactType:'activate',interactPrompt:'Locked cabinet (needs code)',data:{points:50}});
@@ -1003,7 +1002,7 @@ function buildPlayroom(scene,phys){
 /* ---------- ATTIC ---------- */
 function buildAttic(scene,phys){
   const atticY=10.5;
-  const af=new THREE.Mesh(new THREE.BoxGeometry(12,.2,12),new THREE.MeshStandardMaterial({color:0x6a5a4a,roughness:.85}));af.position.set(-10,atticY,-8);af.receiveShadow=true;scene.add(af);allBuildingMeshes.push(af);addSB(6,.2,6,-10,atticY,-8);
+  const af=new THREE.Mesh(new THREE.BoxGeometry(12,.2,12),new THREE.MeshStandardMaterial({color:0x6a5a4a,roughness:.85}));af.position.set(-10,atticY,-8);af.receiveShadow=true;scene.add(af);allBuildingMeshes.push(af);addSB(6,.1,6,-10,atticY,-8);
   const rM=new THREE.MeshStandardMaterial({color:0x8a7a6a,roughness:.85,side:THREE.DoubleSide});
   for(const sx of[-1,1]){const roof=new THREE.Mesh(new THREE.BoxGeometry(6,.08,6),rM);roof.position.set(-10+sx*3,atticY+2.5,-8);roof.rotation.z=sx*.35;scene.add(roof);allBuildingMeshes.push(roof);}
   // Attic wall
@@ -1233,7 +1232,7 @@ function updateVacuum(dt,pp){
     vacuum.eMat.emissiveIntensity=.5+Math.sin(performance.now()*.01)*.5;
     document.getElementById('warning-indicator').textContent='🧹⚠️';document.getElementById('warning-indicator').className='show vacuum-alert';
     document.getElementById('toy-threat').textContent='🧹 VACUUM IS CHASING!';document.getElementById('toy-threat').classList.add('show');
-    if(dist<1.2){if(!GS._invulnerable){GS.health-=dt*15;GS._invulnerable=true;GS._invulnerable_timer=0.5;}sfxGhost();const pa=Math.atan2(-dx,-dz);GS._vx=(GS._vx||0)+Math.sin(pa)*8;GS._vz=(GS._vz||0)+Math.cos(pa)*8;}
+    if(dist<1.2){GS.health-=dt*15;sfxGhost();const pa=Math.atan2(-dx,-dz);GS._vx=(GS._vx||0)+Math.sin(pa)*8;GS._vz=(GS._vz||0)+Math.cos(pa)*8;}
     vacuum.nTimer+=dt;if(vacuum.nTimer>.3){vacuum.nTimer=0;sfx(80,.15,'sawtooth',.03);}
   }else{
     vacuum.pos.x+=vacuum.spd*vacuum.dir*dt;
@@ -1365,7 +1364,7 @@ function updateCat(dt,pp){
     const a=Math.atan2(dx,dz);
     catNPC.pos.x+=Math.sin(a)*2*dt;catNPC.pos.z+=Math.cos(a)*2*dt;
     catNPC.mesh.position.copy(catNPC.pos);catNPC.mesh.rotation.y=a;
-    if(dist<1){if(!GS._invulnerable){GS.health-=dt*20;GS._invulnerable=true;GS._invulnerable_timer=0.5;}sfx(400,.1,'square',.04);const ka=Math.atan2(-dx,-dz);GS._vx=(GS._vx||0)+Math.sin(ka)*10;GS._vz=(GS._vz||0)+Math.cos(ka)*10;}
+    if(dist<1){GS.health-=dt*20;sfx(400,.1,'square',.04);const ka=Math.atan2(-dx,-dz);GS._vx=(GS._vx||0)+Math.sin(ka)*10;GS._vz=(GS._vz||0)+Math.cos(ka)*10;}
     catNPC.eMat.emissiveIntensity=.8;
     if(!inLR||dist>12){catNPC.state='awake';document.getElementById('toy-threat').classList.remove('show');catNPC.pos.copy(catNPC.sleep);}
   }
@@ -1567,284 +1566,35 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
 }
 
 
-
-/* ================================================================
- *  PLAYER ABILITIES
- *  Dash | Sonar Reveal | Tail Whip Attack
- * ================================================================ */
-
-const ABILITIES = {
-  dash: { cooldown: 0, maxCooldown: 1.5, speed: 22, duration: 0.2, timer: 0, active: false },
-  sonar: { cooldown: 0, maxCooldown: 3.0, range: 5, active: false },
-  whip: { cooldown: 0, maxCooldown: 0.6, damage: 30, range: 2.5, active: false, timer: 0 },
-};
-let abilityPressed = { dash: false, sonar: false, whip: false };
-
-function initAbilities() {
-  window.addEventListener('keydown', (e) => {
-    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') abilityPressed.dash = true;
-    if (e.code === 'KeyQ') abilityPressed.sonar = true;
-    if (e.code === 'KeyF') abilityPressed.whip = true;
-  });
-  window.addEventListener('keyup', (e) => {
-    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') abilityPressed.dash = false;
-  });
-}
-
-function updateAbilities(dt) {
-  const p = mouseBody;
-  if (!p) return;
-
-  // --- DASH: Shift key, burst of speed with invulnerability ---
-  ABILITIES.dash.cooldown = Math.max(0, ABILITIES.dash.cooldown - dt);
-  if (ABILITIES.dash.active) {
-    ABILITIES.dash.timer += dt;
-    // Dash forward
-    const dir = new THREE.Vector3(-Math.sin(GS.orbit.theta), 0, -Math.cos(GS.orbit.theta));
-    p.vel.x = dir.x * ABILITIES.dash.speed;
-    p.vel.z = dir.z * ABILITIES.dash.speed;
-    p.vel.y = 2;
-    GS._invulnerable = true;
-    // Trail during dash
-    if (Math.random() < 0.6) {
-      burstSparkles(p.pos.x + (Math.random()-0.5)*0.3, p.pos.y + 0.1, p.pos.z + (Math.random()-0.5)*0.3, 2);
-    }
-    if (ABILITIES.dash.timer >= ABILITIES.dash.duration) {
-      ABILITIES.dash.active = false;
-      GS._invulnerable = false;
-      p.vel.x *= 0.4;
-      p.vel.z *= 0.4;
-    }
-  } else if (abilityPressed.dash && ABILITIES.dash.cooldown <= 0 && (Math.abs(p.vel.x) > 0.5 || Math.abs(p.vel.z) > 0.5)) {
-    ABILITIES.dash.active = true;
-    ABILITIES.dash.timer = 0;
-    ABILITIES.dash.cooldown = ABILITIES.dash.maxCooldown;
-    sfx(600, 0.08, 'sine', 0.04);
-    setTimeout(() => sfx(900, 0.06, 'sine', 0.03), 50);
-    showToast('💨 Dash!', 'info');
-  }
-
-  // --- SONAR REVEAL: Q key, pulse reveals hidden objects ---
-  ABILITIES.sonar.cooldown = Math.max(0, ABILITIES.sonar.cooldown - dt);
-  if (abilityPressed.sonar && ABILITIES.sonar.cooldown <= 0) {
-    ABILITIES.sonar.cooldown = ABILITIES.sonar.maxCooldown;
-    ABILITIES.sonar.active = true;
-    sfx(400, 0.15, 'sine', 0.05);
-    setTimeout(() => sfx(600, 0.1, 'sine', 0.04), 100);
-    setTimeout(() => sfx(800, 0.08, 'sine', 0.03), 200);
-
-    // Reveal hidden interactables nearby
-    let revealed = false;
-    for (const b of GS.interactables) {
-      if (b.data?.hidden) {
-        const d = p.pos.distanceTo(b.pos);
-        if (d < ABILITIES.sonar.range) {
-          b.data.hidden = false;
-          if (b.mesh) b.mesh.visible = true;
-          burstSparkles(b.pos.x, b.pos.y, b.pos.z, 8);
-          revealed = true;
-        }
-      }
-    }
-    if (revealed) {
-      showToast('🔊 Sonar revealed hidden objects nearby!', 'info');
-      addScore(5, 'Sonar reveal! +5');
-    } else {
-      showToast('🔊 Sonar pulse... nothing hidden nearby', '');
-    }
-
-    // Visual pulse ring
-    ABILITIES._sonarRing = 0;
-
-    abilityPressed.sonar = false;
-  }
-
-  // Sonar ring visual
-  if (ABILITIES._sonarRing !== undefined && ABILITIES._sonarRing < 1) {
-    ABILITIES._sonarRing += dt * 3;
-  }
-
-  // --- TAIL WHIP: F key, attack in front ---
-  ABILITIES.whip.cooldown = Math.max(0, ABILITIES.whip.cooldown - dt);
-  if (abilityPressed.whip && ABILITIES.whip.cooldown <= 0) {
-    ABILITIES.whip.active = true;
-    ABILITIES.whip.timer = 0;
-    ABILITIES.whip.cooldown = ABILITIES.whip.maxCooldown;
-    sfx(250, 0.08, 'sawtooth', 0.05);
-    sfx(120, 0.05, 'square', 0.04);
-
-    // Check for enemies/objects in range
-    const fwd = new THREE.Vector3(-Math.sin(GS.orbit.theta), 0, -Math.cos(GS.orbit.theta));
-    let hitSomething = false;
-
-    // Hit vacuum
-    if (vacuum && p.pos.distanceTo(vacuum.pos) < ABILITIES.whip.range) {
-      const toVac = new THREE.Vector3().subVectors(vacuum.pos, p.pos);
-      const dot = fwd.dot(toVac.normalize());
-      if (dot > 0.3) {
-        vacuum.stunned = (vacuum.stunned || 0) + 1.5;
-        vacuum.pos.x += fwd.x * 3;
-        vacuum.pos.z += fwd.z * 3;
-        hitSomething = true;
-        sfx(80, 0.2, 'sawtooth', 0.06);
-        burstSparkles(vacuum.pos.x, vacuum.pos.y + 0.3, vacuum.pos.z, 10);
-        addScore(3, 'Whipped vacuum! +3');
-      }
-    }
-
-    // Hit cat
-    if (catNPC && p.pos.distanceTo(catNPC.pos) < ABILITIES.whip.range) {
-      const toCat = new THREE.Vector3().subVectors(catNPC.pos, p.pos);
-      const dot = fwd.dot(toCat.normalize());
-      if (dot > 0.3) {
-        catNPC.stunned = (catNPC.stunned || 0) + 2;
-        catNPC.pos.x += fwd.x * 2.5;
-        catNPC.pos.z += fwd.z * 2.5;
-        hitSomething = true;
-        catNPC.state = 'awake';
-        sfx(300, 0.15, 'square', 0.04);
-        burstSparkles(catNPC.pos.x, catNPC.pos.y + 0.2, catNPC.pos.z, 10);
-        addScore(3, 'Whipped cat! +3');
-      }
-    }
-
-    // Push physics objects
-    for (const b of phys.bodies) {
-      if (b.static || b === mouseBody || b.tag?.startsWith('npc')) continue;
-      const d = p.pos.distanceTo(b.pos);
-      if (d < ABILITIES.whip.range) {
-        const dir = b.pos.clone().sub(p.pos).normalize();
-        const dot = fwd.dot(dir);
-        if (dot > 0.3) {
-          b.vel.add(fwd.clone().multiplyScalar(8));
-          b.vel.y += 3;
-          hitSomething = true;
-        }
-      }
-    }
-
-    // Visual effect
-    if (hitSomething) {
-      burstSparkles(p.pos.x + fwd.x, p.pos.y + 0.3, p.pos.z + fwd.z, 12);
-    }
-
-    // Animate mouse character whip
-    if (mouseChar && mouseChar.userData) {
-      mouseChar.userData.whipAnim = 0.3;
-    }
-
-    abilityPressed.whip = false;
-  }
-
-  // Whip animation timer
-  if (ABILITIES.whip.active) {
-    ABILITIES.whip.timer += dt;
-    if (ABILITIES.whip.timer > 0.15) {
-      ABILITIES.whip.active = false;
-    }
-  }
-
-  // Invulnerability decay
-  if (GS._invulnerable && !ABILITIES.dash.active) {
-    GS._invulnerable_timer = (GS._invulnerable_timer || 0) - dt;
-    if (GS._invulnerable_timer <= 0) {
-      GS._invulnerable = false;
-    }
-  }
-}
-
-/* --- Draw sonar ring --- */
-let sonarRingMesh = null;
-function initSonarRing(scene) {
-  const ringGeo = new THREE.RingGeometry(0.1, 0.15, 32);
-  const ringMat = new THREE.MeshBasicMaterial({
-    color: 0x70c0e8, transparent: true, opacity: 0.5,
-    side: THREE.DoubleSide, depthWrite: false,
-    blending: THREE.AdditiveBlending
-  });
-  sonarRingMesh = new THREE.Mesh(ringGeo, ringMat);
-  sonarRingMesh.rotation.x = -Math.PI / 2;
-  sonarRingMesh.visible = false;
-  scene.add(sonarRingMesh);
-}
-
-function updateSonarRing(dt, playerPos) {
-  if (!sonarRingMesh) return;
-  if (ABILITIES._sonarRing !== undefined && ABILITIES._sonarRing < 1 && ABILITIES.sonar.active) {
-    sonarRingMesh.visible = true;
-    const t = ABILITIES._sonarRing;
-    const scale = t * ABILITIES.sonar.range;
-    sonarRingMesh.scale.set(scale, scale, scale);
-    sonarRingMesh.position.copy(playerPos);
-    sonarRingMesh.position.y = 0.1;
-    sonarRingMesh.material.opacity = (1 - t) * 0.6;
-  } else {
-    sonarRingMesh.visible = false;
-  }
-}
-
-/* --- HUD for abilities --- */
-function updateAbilityHUD() {
-  const dashEl = document.getElementById('ab-dash');
-  const sonarEl = document.getElementById('ab-sonar');
-  const whipEl = document.getElementById('ab-whip');
-  if (dashEl) {
-    dashEl.style.opacity = ABILITIES.dash.cooldown <= 0 ? '1' : '0.3';
-    dashEl.textContent = '💨' + (ABILITIES.dash.cooldown > 0 ? ' ' + ABILITIES.dash.cooldown.toFixed(1) : ' READY');
-  }
-  if (sonarEl) {
-    sonarEl.style.opacity = ABILITIES.sonar.cooldown <= 0 ? '1' : '0.3';
-    sonarEl.textContent = '🔊' + (ABILITIES.sonar.cooldown > 0 ? ' ' + ABILITIES.sonar.cooldown.toFixed(1) : ' READY');
-  }
-  if (whipEl) {
-    whipEl.style.opacity = ABILITIES.whip.cooldown <= 0 ? '1' : '0.3';
-    whipEl.textContent = '⚡' + (ABILITIES.whip.cooldown > 0 ? ' ' + ABILITIES.whip.cooldown.toFixed(1) : ' READY');
-  }
-}
-
-
-
-/* --- Atmospheric light flicker --- */
-function updateFlicker(dt) {
-  if (!scene) return;
-  const time = performance.now() * 0.001;
-  scene.children.forEach(child => {
-    if (child.isPointLight && child.userData.flicker) {
-      const bi = child.userData.baseIntensity || child.intensity;
-      child.intensity = bi + Math.sin(time * (child.userData.speed||2) + (child.userData.offset||0)) * (child.userData.amount||0.1);
-    }
-  });
-}
-
 /* ---------- INIT ---------- */
 function init(){
   try{
-    scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x0a0a0f,.008);
-    camera=new THREE.PerspectiveCamera(58,innerWidth/innerHeight,.01,400);camera.position.set(0,3,8);
+    scene=new THREE.Scene();scene.fog=new THREE.FogExp2(0x0a0a0f,.01);
+    camera=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,.01,400);camera.position.set(0,3,8);
     renderer=new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
     renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,2));
-    renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;renderer.shadowMap.bias=0.0001;
-    renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.4;renderer.outputColorSpace=THREE.SRGBColorSpace;
+    renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+    renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.2;renderer.outputColorSpace=THREE.SRGBColorSpace;
     document.body.appendChild(renderer.domElement);
     scene.add(new THREE.AmbientLight(0x303050,.4));
     const dir=new THREE.DirectionalLight(0xfff0d0,2.8);dir.position.set(-10,18,-15);dir.castShadow=true;
-    dir.shadow.mapSize.set(4096,4096);dir.shadow.camera.near=.1;dir.shadow.camera.far=70;dir.shadow.bias=-0.0002;
+    dir.shadow.mapSize.set(2048,2048);dir.shadow.camera.near=.5;dir.shadow.camera.far=70;
     dir.shadow.camera.left=-35;dir.shadow.camera.right=35;dir.shadow.camera.top=30;dir.shadow.camera.bottom=-30;dir.shadow.bias=-.001;
-    scene.add(dir);scene.add(new THREE.HemisphereLight(0xfff5e0,0x203060,.6));scene.add(new THREE.HemisphereLight(0xffd080,0x0a0e1a,.3));
+    scene.add(dir);scene.add(new THREE.HemisphereLight(0xfff5e0,0x0a0e1a,.5));
     const fill=new THREE.DirectionalLight(0xffd080,.6);fill.position.set(10,5,20);scene.add(fill);
     const pmrem=new THREE.PMREMGenerator(renderer);const envS=new THREE.Scene();
-    envS.add(new THREE.HemisphereLight(0xd4a34a,0x0a0e1a,1));scene.environment=pmrem.fromScene(envS,.06).texture;pmrem.dispose();
+    envS.add(new THREE.HemisphereLight(0xd4a34a,0x0a0e1a,1));scene.environment=pmrem.fromScene(envS,.04).texture;pmrem.dispose();
     phys=new PhysWorld();allBuildingMeshes=[];
     buildHouse(scene,phys);buildLivingRoom(scene,phys);buildKitchen(scene,phys);buildBedroom(scene,phys);
     buildBathroom(scene,phys);buildHallway(scene,phys);buildPlayroom(scene,phys);buildAttic(scene,phys);
     buildCity(scene);dustPts=buildDust(scene);sparklePts=initSparkles(scene);
     buildLightRays(scene);buildToyNPCs(scene,phys);buildVacuum(scene,phys);buildCat(scene,phys);buildClock(scene,phys);
-    buildQuestGuide(scene);initAbilities();initSonarRing(scene);
+    buildQuestGuide(scene);
     mouseChar=createMouseChar(GS.charColor);mouseChar.position.set(2,.175,5);scene.add(mouseChar);
     mouseBody=new Body({pos:new THREE.Vector3(2,.175,5),hs:new THREE.Vector3(.3,.18,.55),mass:1,tag:'player',friction:.85,bounce:0});phys.add(mouseBody);
     camSmooth.set(2,3,10);camLookSmooth.set(2,.5,5);
     composer=new EffectComposer(renderer);composer.addPass(new RenderPass(scene,camera));
-    const bloomPass=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),0.25,0.25,0.65);bloomPass.threshold=0.1;bloomPass.strength=0.35;bloomPass.radius=0.2;composer.addPass(bloomPass);
+    composer.addPass(new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.3,.3,.85));
     clock=new THREE.Clock();setupInput();window.addEventListener('resize',onResize);initMinimap();
     startLoading();
   }catch(err){console.error('Init failed:',err);document.querySelector('#loading-screen .sub').textContent='Error: '+err.message;}
@@ -1906,10 +1656,6 @@ function loop(){
   updateCat(dt,mouseBody.pos);
   updateClock(dt);
   updateQuestGuide(dt,mouseBody.pos);
-  updateAbilities(dt);
-  updateSonarRing(dt,mouseBody.pos);
-  updateAbilityHUD();
-  updateFlicker(dt);
   composer.render();
 }
 function tickPhysics(dt){
@@ -2000,12 +1746,6 @@ init();loop();
 <div class="clockhz"><div class="cd-time" id="clock-display">--:--</div></div>
 <div id="secret-counter">🔍 Secrets: <span id="secret-count">0</span></div>
 <div id="toy-threat"></div>
-<!-- Abilities HUD -->
-<div id="abilities-hud" style="position:fixed;bottom:3.5rem;left:50%;transform:translateX(-50%);z-index:55;display:flex;gap:6px;pointer-events:none;font-size:.55rem;color:var(--fg);background:var(--card);padding:.2rem .5rem;border-radius:20px;border:1px solid var(--border);backdrop-filter:blur(4px)">
-  <span id="ab-dash" style="padding:.1rem .3rem;opacity:1;transition:opacity .3s">💨 DASH</span>
-  <span id="ab-sonar" style="padding:.1rem .3rem;opacity:1;transition:opacity .3s">🔊 SONAR</span>
-  <span id="ab-whip" style="padding:.1rem .3rem;opacity:1;transition:opacity .3s">⚡ WHIP</span>
-</div>
 
 </body>
 </html>
